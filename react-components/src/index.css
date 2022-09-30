@@ -4,7 +4,15 @@
   box-sizing: border-box;
 }
 
+body {
+  --card-color: #fff7f7;
+}
+
 .link {
   text-decoration: none;
   color: inherit;
+}
+
+.list {
+  list-style-type: none;
 }

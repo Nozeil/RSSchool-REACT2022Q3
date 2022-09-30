@@ -1,0 +1,23 @@
+.card {
+  background-color: var(--card-color);
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.card__image {
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card__info-item {
+  margin-bottom: 5px;
+}
