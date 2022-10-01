@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import cl from './SearchBar.module.css';
 
 class SearchBar extends React.Component {
   state: { value: string };
@@ -40,14 +41,15 @@ class SearchBar extends React.Component {
 
   render(): React.ReactNode {
     return (
-      <div className="">
+      <div className={cl['search-bar']}>
         <input
+          className={cl['search-input']}
           type="search"
           placeholder="Search..."
           value={this.state.value}
           onChange={this.onChange}
         />
-        <button>Search</button>
+        <button className={cl['search-button']}></button>
       </div>
     );
   }

@@ -4,13 +4,24 @@
   box-sizing: border-box;
 }
 
-body {
+.body {
+  background-color: var(--bg-color);
+  font-family: 'Montserrat', sans-serif;
+
+  --header-bg-color: #542781;
   --card-color: #fff7f7;
+  --bg-color: #fcfcfc;
+  --light-s-color: #f0f8ff;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .link {
   text-decoration: none;
-  color: inherit;
 }
 
 .list {

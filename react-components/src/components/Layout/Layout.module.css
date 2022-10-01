@@ -1,3 +1,23 @@
-.active-link {
-  border: 1px solid red;
+.header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: var(--header-bg-color);
+  margin-bottom: 20px !important;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--light-s-color);
+  padding: 0 5px;
+}
+
+.active-link::after {
+  position: absolute;
+  bottom: -3px;
+  left: 5px;
+  content: '';
+  width: calc(100% - 10px);
+  height: 2px;
+  background-color: var(--light-s-color);
 }
