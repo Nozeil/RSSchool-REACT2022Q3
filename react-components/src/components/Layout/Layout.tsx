@@ -11,13 +11,13 @@ class Layout extends React.Component {
       <>
         <header className={`${cl.header} container`}>
           <nav className={cl.nav}>
-            <NavLink end to="/" className={this.setActive}>
+            <NavLink end to="/" className={this.setActive} data-testid="home">
               Home
             </NavLink>
-            <NavLink to="about" className={this.setActive}>
+            <NavLink to="about" className={this.setActive} data-testid="about">
               About
             </NavLink>
-            <NavLink to="404" className={this.setActive}>
+            <NavLink to="404" className={this.setActive} data-testid="error">
               404
             </NavLink>
           </nav>

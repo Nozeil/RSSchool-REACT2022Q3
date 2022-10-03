@@ -12,8 +12,8 @@ class Card extends React.Component<{ cardData: CardData }> {
 
   render() {
     return (
-      <div className={cl.card}>
-        <img className={cl['card__image']} src={this.data.img} alt="car" />
+      <div data-testid="card" className={cl.card}>
+        <img data-testid="img" className={cl['card__image']} src={this.data.img} alt="car" />
         <div className={cl['card__info']}>
           <h3>{this.data.model}</h3>
           <ul className="list">
