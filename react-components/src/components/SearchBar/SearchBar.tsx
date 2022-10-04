@@ -11,16 +11,14 @@ class SearchBar extends React.Component {
     this.storageKey = 'search';
   }
 
-  onChange = (e: ChangeEvent) => {
-    if (e.target instanceof HTMLInputElement) {
-      if (!e.target.value) {
-        localStorage.removeItem(this.storageKey);
-      }
-
-      this.setState({
-        value: e.target.value,
-      });
+  onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) {
+      localStorage.removeItem(this.storageKey);
     }
+
+    this.setState({
+      value: e.target.value,
+    });
   };
 
   componentDidMount = (): void => {
@@ -49,7 +47,7 @@ class SearchBar extends React.Component {
           value={this.state.value}
           onChange={this.onChange}
         />
-        <button className={cl['search-button']}></button>
+        <button className={cl['search-button']} />
       </div>
     );
   }

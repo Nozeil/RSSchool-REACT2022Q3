@@ -1,10 +1,10 @@
 import Card from 'components/Card/Card';
 import React from 'react';
-import { CardListState } from 'types';
 import cl from './CardList.module.css';
+import { CardListProps } from './types';
 
-class CardList extends React.Component<CardListState> {
-  constructor(props: CardListState) {
+class CardList extends React.Component<CardListProps> {
+  constructor(props: CardListProps) {
     super(props);
   }
 

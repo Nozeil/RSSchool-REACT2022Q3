@@ -1,7 +1,3 @@
-export type MockData = CardData[];
-export type CardListState = {
-  data: MockData;
-};
 export type CardData = {
   id: string;
   price: string;

@@ -30,7 +30,6 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 describe('', () => {
-  beforeAll(() => localStorage.clear());
   beforeEach(() => localStorage.clear());
 
   const [key, value] = ['search', 'test-value'];
@@ -50,7 +49,6 @@ describe('', () => {
 
     render(<SearchBar />);
 
-    expect(getItemSpy).toHaveBeenCalled();
     expect(getItemSpy).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem(key)).toBe(null);
 
@@ -69,7 +67,6 @@ describe('', () => {
 
     fireEvent.change(search, { target: { value: '' } });
 
-    expect(removeItemSpy).toHaveBeenCalled();
     expect(removeItemSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -77,7 +74,6 @@ describe('', () => {
     const setItemSpy = jest.spyOn(localStorage, 'setItem');
     const { unmount } = render(<SearchBar />);
     unmount();
-    expect(setItemSpy).toBeCalled();
     expect(setItemSpy).toBeCalledTimes(1);
   });
 });
