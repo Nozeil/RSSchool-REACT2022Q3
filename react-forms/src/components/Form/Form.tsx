@@ -190,7 +190,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
     }
   };
 
-  onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  onChange = (e: ChangeEvent<HTMLFormElement>) => {
     const key = e.target.name;
 
     if (this.state.errors[key]) {
@@ -217,52 +217,25 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
     return (
       <>
-        <form className={cl.form}>
+        <form className={cl.form} onChange={this.onChange}>
           <label className={`${cl.columnLabel} ${nameError && cl.errorField}`}>
-            Name{' '}
-            <input
-              type="text"
-              name="name"
-              className={cl.field}
-              ref={this.name}
-              onChange={this.onChange}
-            />
+            Name <input type="text" name="name" className={cl.field} ref={this.name} />
             {nameError && <div className={cl.errorMessage}>{nameError}</div>}
           </label>
 
           <label className={`${cl.columnLabel} ${surnameError && cl.errorField}`}>
-            Surname{' '}
-            <input
-              type="text"
-              name="surname"
-              className={cl.field}
-              ref={this.surname}
-              onChange={this.onChange}
-            />
+            Surname <input type="text" name="surname" className={cl.field} ref={this.surname} />
             {surnameError && <div className={cl.errorMessage}>{surnameError}</div>}
           </label>
 
           <label className={`${cl.columnLabel} ${dateError && cl.errorField}`}>
-            Birthday{' '}
-            <input
-              type="date"
-              name="date"
-              className={cl.field}
-              ref={this.date}
-              onChange={this.onChange}
-            />
+            Birthday <input type="date" name="date" className={cl.field} ref={this.date} />
             {dateError && <div className={cl.errorMessage}>{dateError}</div>}
           </label>
 
           <label className={`${cl.columnLabel} ${countryError && cl.errorField}`}>
             Country
-            <select
-              name="country"
-              ref={this.country}
-              defaultValue={'default'}
-              className={cl.field}
-              onChange={this.onChange}
-            >
+            <select name="country" ref={this.country} defaultValue={'default'} className={cl.field}>
               <option value="default" disabled>
                 Choose a country
               </option>
@@ -277,14 +250,8 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
           </label>
 
           <label className={`${cl.rowLabel} ${consentError && cl.errorField}`}>
-            <input
-              type="checkbox"
-              name="consent"
-              id="consent"
-              ref={this.consent}
-              onChange={this.onChange}
-            />{' '}
-            I agree to my personal data being processed
+            <input type="checkbox" name="consent" id="consent" ref={this.consent} /> I agree to my
+            personal data being processed
             {consentError && <div className={cl.errorMessage}>{consentError}</div>}
           </label>
 
@@ -310,7 +277,6 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
               className={cl.file}
               ref={this.image}
               accept=".png, .jpg, .jpeg"
-              onChange={this.onChange}
             />
             <div className={cl.button}>Upload image</div>
             {imageError && <div className={cl.errorMessage}>{imageError}</div>}
