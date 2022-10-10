@@ -1,4 +1,4 @@
-import { CardData } from "components/Card/types";
+import { CardData } from 'components/Card/types';
 
 export type MockData = CardData[];
 

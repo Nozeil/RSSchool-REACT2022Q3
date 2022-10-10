@@ -1,0 +1,103 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  gap: 5px;
+}
+
+.field {
+  height: 40px;
+  padding: 0 5px 0 5px;
+  border: none;
+  outline: none;
+  font: inherit;
+  background-color: var(--light-s-color);
+  border-radius: 5px;
+}
+
+.rowLabel,
+.columnLabel {
+  display: flex;
+  height: 85px;
+  gap: 5px;
+}
+
+.columnLabel {
+  flex-direction: column;
+}
+
+.successMessage, .gender {
+  display: none;
+}
+
+.showMessage {
+  opacity: 1;
+  transition: 100ms linear;
+}
+
+.hideMessage {
+  opacity: 0;
+  transition: 100ms linear 2s;
+}
+
+.rowLabel {
+  text-align: center;
+  align-items: center;
+  height: 50px;
+  cursor: pointer;
+}
+
+.switcher {
+  position: relative;
+  width: 52px;
+  height: 26px;
+  border-radius: 26px;
+  border: 2px solid black;
+}
+
+.indicator {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--header-bg-color);
+  transform: translate(calc(4px / 2), calc((26px - 4px)/2 - 50%));
+  transition: ease-in-out 0.3s;
+}
+
+.gender:checked~.indicator {
+  transform: translate(calc((52px - 4px) - 100% - 2px), calc((26px - 4px)/2 - 50%));
+}
+
+.errorMessage {
+  font-size: 0.8rem;
+}
+
+.errorMessage,
+.errorField {
+  color: var(--error-color);
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.file {
+  display: none;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 40px;
+  font: inherit;
+  color: var(--light-s-color);
+  border: none;
+  outline: none;
+  border-radius: 13px;
+  background-color: var(--header-bg-color);
+  cursor: pointer;
+}

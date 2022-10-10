@@ -20,6 +20,9 @@ class Layout extends React.Component {
             <NavLink to="404" className={this.setActive} data-testid="error">
               404
             </NavLink>
+            <NavLink to="forms" className={this.setActive} data-testid="forms">
+              Forms
+            </NavLink>
           </nav>
         </header>
         <main className="container">
