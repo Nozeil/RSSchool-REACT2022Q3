@@ -191,15 +191,14 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
   };
 
   onChange = (e: ChangeEvent<HTMLFormElement>) => {
-    const key = e.target.name;
+    const [key, canSubmit] = [e.target.name, !this.state.canSubmit];
 
     if (this.state.errors[key]) {
       this.setError(key, '');
     }
-    const canSubmit = !this.state.canSubmit;
 
     if (canSubmit) {
-      this.setState(() => ({ canSubmit: true }));
+      this.setState(() => ({ canSubmit }));
     }
   };
 
