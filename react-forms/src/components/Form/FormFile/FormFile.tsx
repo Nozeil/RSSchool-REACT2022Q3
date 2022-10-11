@@ -6,9 +6,20 @@ class FormFile extends React.Component<FormImagePropsI> {
     const { innerRef: ref, cl, errorMessage } = this.props;
     return (
       <label className={`${cl.rowLabel} ${errorMessage && cl.errorField}`}>
-        <input type="file" name="image" className={cl.file} ref={ref} accept=".png, .jpg, .jpeg" />
+        <input
+          type="file"
+          name="image"
+          className={cl.file}
+          ref={ref}
+          accept=".png, .jpg, .jpeg"
+          data-testid="image"
+        />
         <div className={cl.button}>Upload image</div>
-        {errorMessage && <div className={cl.errorMessage}>{errorMessage}</div>}
+        {errorMessage && (
+          <div className={cl.errorMessage} data-testid={'error'}>
+            {errorMessage}
+          </div>
+        )}
       </label>
     );
   }

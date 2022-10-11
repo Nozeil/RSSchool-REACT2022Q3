@@ -35,4 +35,10 @@ describe('App routing', () => {
     expect(screen.getByPlaceholderText('Search...'));
     expect(screen.getByTestId('cards')).toBeInTheDocument();
   });
+
+  it('should be rendered form page', () => {
+    renderWithRouter(<App />, { route: '/forms' });
+    fireEvent.click(screen.getByTestId('forms'));
+    expect(screen.getByTestId('form')).toBeInTheDocument();
+  });
 });

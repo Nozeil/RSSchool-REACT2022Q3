@@ -220,7 +220,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
     return (
       <>
-        <form className={cl.form} onChange={this.onChange}>
+        <form className={cl.form} onChange={this.onChange} data-testid="form">
           <FormInput
             ref={this.name}
             cl={cl}

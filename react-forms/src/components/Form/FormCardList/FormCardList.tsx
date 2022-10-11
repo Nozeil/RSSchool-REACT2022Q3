@@ -7,7 +7,7 @@ import { FormCardListPropsI } from './FormCardList.interfaces';
 class FormCardList extends React.Component<FormCardListPropsI> {
   render() {
     return (
-      <div className={cl['card-list']}>
+      <div className={cl['card-list']} data-testid="formCardList">
         {this.props.cards.map((card) => (
           <FormCard data={card.data} key={card.id} />
         ))}

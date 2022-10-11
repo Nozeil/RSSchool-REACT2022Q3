@@ -7,7 +7,13 @@ class FormSelect extends React.Component<FormSelectPropsI> {
     return (
       <label className={`${cl.columnLabel} ${errorMessage && cl.errorField}`}>
         Country
-        <select name="country" ref={ref} defaultValue={'default'} className={cl.field}>
+        <select
+          name="country"
+          ref={ref}
+          defaultValue={'default'}
+          className={cl.field}
+          data-testid={'country'}
+        >
           <option value="default" disabled>
             Choose a country
           </option>
@@ -18,7 +24,11 @@ class FormSelect extends React.Component<FormSelectPropsI> {
           <option value="Lithuania">Lithuania</option>
           <option value="Latvia">Latvia</option>
         </select>
-        {errorMessage && <div className={cl.errorMessage}>{errorMessage}</div>}
+        {errorMessage && (
+          <div className={cl.errorMessage} data-testid={'error'}>
+            {errorMessage}
+          </div>
+        )}
       </label>
     );
   }

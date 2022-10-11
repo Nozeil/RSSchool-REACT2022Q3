@@ -10,6 +10,7 @@ class FormSubmit extends React.Component<FormSubmitPropsI> {
         value="Submit"
         className={`${cl.button} ${canSubmit && areErrors ? '' : cl.disabled}`}
         onClick={onClick}
+        data-testid="submit"
       />
     );
   }

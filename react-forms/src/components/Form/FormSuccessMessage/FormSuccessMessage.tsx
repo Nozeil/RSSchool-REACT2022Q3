@@ -8,6 +8,7 @@ class FormSuccessMessage extends React.Component<FormSuccessMessagePropsI> {
       <div
         className={isSuccessMessage ? cl.showMessage : cl.hideMessage}
         onTransitionEnd={onTransitionEnd}
+        data-testid="successMessage"
       >
         Data has been saved
       </div>

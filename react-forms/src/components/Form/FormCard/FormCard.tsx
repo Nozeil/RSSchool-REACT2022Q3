@@ -7,7 +7,7 @@ class FormCard extends React.Component<FormCardPropsI> {
     const { name, surname, date, country, gender, file } = this.props.data;
 
     return (
-      <div className={cl.card}>
+      <div className={cl.card} data-testid={'formCard'}>
         <img className={cl.card__image} src={URL.createObjectURL(file)} alt="user-image" />
         <ul className="list">
           <li className={cl['card__info-team']}>Name: {name}</li>

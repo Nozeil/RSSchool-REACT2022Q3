@@ -14,8 +14,19 @@ class FormInput extends React.Component<FormInputPropsI> {
     } = this.props;
     return (
       <label className={`${labelDirection} ${errorMessage && cl.errorField}`}>
-        {labelText} <input type={inputType} name={inputName} className={cl.field} ref={ref} />
-        {errorMessage && <div className={cl.errorMessage}>{errorMessage}</div>}
+        {labelText}{' '}
+        <input
+          type={inputType}
+          name={inputName}
+          className={cl.field}
+          ref={ref}
+          data-testid={inputName}
+        />
+        {errorMessage && (
+          <div className={cl.errorMessage} data-testid={'error'}>
+            {errorMessage}
+          </div>
+        )}
       </label>
     );
   }

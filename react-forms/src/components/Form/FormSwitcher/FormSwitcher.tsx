@@ -8,7 +8,13 @@ class FormSwitcher extends React.Component<FormSwitcherPropsI> {
       <label className={cl.rowLabel}>
         Male{' '}
         <div className={cl.switcher}>
-          <input type="checkbox" name="gender" className={cl.gender} ref={ref} />{' '}
+          <input
+            type="checkbox"
+            name="gender"
+            className={cl.gender}
+            ref={ref}
+            data-testid="gender"
+          />{' '}
           <div className={cl.indicator} />
         </div>
         Female

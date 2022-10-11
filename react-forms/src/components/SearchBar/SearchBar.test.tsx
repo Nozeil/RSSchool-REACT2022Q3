@@ -29,7 +29,7 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock(),
 });
 
-describe('', () => {
+describe('Local storage', () => {
   beforeEach(() => localStorage.clear());
 
   const [key, value] = ['search', 'test-value'];
