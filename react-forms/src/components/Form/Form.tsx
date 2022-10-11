@@ -2,6 +2,12 @@ import React, { ChangeEvent } from 'react';
 import { FormStateI, CurrentInputI, CurrentSelectI } from './Form.types';
 import cl from './Form.module.css';
 import FormCardList from './FormCardList/FormCardList';
+import FormInput from './FormInput/FormInput';
+import FormSelect from './FormSelect/FormSelect';
+import FormSwitcher from './FormSwitcher/FormSwitcher';
+import FormFile from './FormFile/FormFile';
+import FormSubmit from './FormSubmit/FormSubmit';
+import FormSuccessMessage from './FormSuccessMessage/FormSuccessMessage';
 
 class Form extends React.Component<Record<string, never>, FormStateI> {
   name: React.RefObject<HTMLInputElement>;
@@ -11,7 +17,6 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
   consent: React.RefObject<HTMLInputElement>;
   gender: React.RefObject<HTMLInputElement>;
   image: React.RefObject<HTMLInputElement>;
-  submit: React.RefObject<HTMLInputElement>;
 
   constructor(props: Record<string, never>) {
     super(props);
@@ -35,7 +40,6 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
     this.consent = React.createRef<HTMLInputElement>();
     this.gender = React.createRef<HTMLInputElement>();
     this.image = React.createRef<HTMLInputElement>();
-    this.submit = React.createRef<HTMLInputElement>();
   }
 
   setError = (key: string, value: string) => {
@@ -217,85 +221,64 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
     return (
       <>
         <form className={cl.form} onChange={this.onChange}>
-          <label className={`${cl.columnLabel} ${nameError && cl.errorField}`}>
-            Name <input type="text" name="name" className={cl.field} ref={this.name} />
-            {nameError && <div className={cl.errorMessage}>{nameError}</div>}
-          </label>
-
-          <label className={`${cl.columnLabel} ${surnameError && cl.errorField}`}>
-            Surname <input type="text" name="surname" className={cl.field} ref={this.surname} />
-            {surnameError && <div className={cl.errorMessage}>{surnameError}</div>}
-          </label>
-
-          <label className={`${cl.columnLabel} ${dateError && cl.errorField}`}>
-            Birthday <input type="date" name="date" className={cl.field} ref={this.date} />
-            {dateError && <div className={cl.errorMessage}>{dateError}</div>}
-          </label>
-
-          <label className={`${cl.columnLabel} ${countryError && cl.errorField}`}>
-            Country
-            <select name="country" ref={this.country} defaultValue={'default'} className={cl.field}>
-              <option value="default" disabled>
-                Choose a country
-              </option>
-              <option value="Belarus">Belarus</option>
-              <option value="Ukraine">Ukraine</option>
-              <option value="Poland">Poland</option>
-              <option value="Russia">Russia</option>
-              <option value="Lithuania">Lithuania</option>
-              <option value="Latvia">Latvia</option>
-            </select>
-            {countryError && <div className={cl.errorMessage}>{countryError}</div>}
-          </label>
-
-          <label className={`${cl.rowLabel} ${consentError && cl.errorField}`}>
-            <input type="checkbox" name="consent" id="consent" ref={this.consent} /> I agree to my
-            personal data being processed
-            {consentError && <div className={cl.errorMessage}>{consentError}</div>}
-          </label>
-
-          <label className={cl.rowLabel}>
-            Male{' '}
-            <div className={cl.switcher}>
-              <input
-                type="checkbox"
-                name="gender"
-                id="gender"
-                className={cl.gender}
-                ref={this.gender}
-              />{' '}
-              <div className={cl.indicator} />
-            </div>
-            Female
-          </label>
-
-          <label className={`${cl.rowLabel} ${imageError && cl.errorField}`}>
-            <input
-              type="file"
-              name="image"
-              className={cl.file}
-              ref={this.image}
-              accept=".png, .jpg, .jpeg"
-            />
-            <div className={cl.button}>Upload image</div>
-            {imageError && <div className={cl.errorMessage}>{imageError}</div>}
-          </label>
-
-          <input
-            type="submit"
-            value="Submit"
-            className={`${cl.button} ${
-              this.state.canSubmit && !this.areErrors() ? '' : cl.disabled
-            }`}
-            onClick={this.onClick}
-            ref={this.submit}
+          <FormInput
+            ref={this.name}
+            cl={cl}
+            errorMessage={nameError}
+            labelText={'Name'}
+            labelDirection={cl.columnLabel}
+            inputType={'text'}
+            inputName={'name'}
           />
-          <div
-            className={this.state.isSuccessMessage ? cl.showMessage : cl.hideMessage}
+
+          <FormInput
+            ref={this.surname}
+            cl={cl}
+            errorMessage={surnameError}
+            labelText={'Surname'}
+            labelDirection={cl.columnLabel}
+            inputType={'text'}
+            inputName={'surname'}
+          />
+
+          <FormInput
+            ref={this.date}
+            cl={cl}
+            errorMessage={dateError}
+            labelText={'Birthday'}
+            labelDirection={cl.columnLabel}
+            inputType={'date'}
+            inputName={'date'}
+          />
+
+          <FormSelect ref={this.country} cl={cl} errorMessage={countryError} />
+
+          <FormInput
+            ref={this.consent}
+            cl={cl}
+            errorMessage={consentError}
+            labelText={'I agree to my personal data being processed'}
+            labelDirection={cl.rowLabel}
+            inputType={'checkbox'}
+            inputName={'consent'}
+          />
+
+          <FormSwitcher ref={this.gender} cl={cl} />
+
+          <FormFile ref={this.image} cl={cl} errorMessage={imageError} />
+
+          <FormSubmit
+            cl={cl}
+            canSubmit={this.state.canSubmit}
+            areErrors={!this.areErrors()}
+            onClick={this.onClick}
+          />
+
+          <FormSuccessMessage
+            isSuccessMessage={this.state.isSuccessMessage}
+            cl={cl}
             onTransitionEnd={this.onTransitionEnd}
-          >
-            Data has been saved
-          </div>
+          />
         </form>
         <FormCardList cards={this.state.data} />
       </>
