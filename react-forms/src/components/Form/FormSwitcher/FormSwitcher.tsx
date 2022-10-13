@@ -1,4 +1,5 @@
 import React from 'react';
+import { InputNames, InputTypes, TestIds } from '../Form.enums';
 import { FormSwitcherPropsI } from './FormSwitcher.interfaces';
 
 class FormSwitcher extends React.Component<FormSwitcherPropsI> {
@@ -9,11 +10,11 @@ class FormSwitcher extends React.Component<FormSwitcherPropsI> {
         Male{' '}
         <div className={cl.switcher}>
           <input
-            type="checkbox"
-            name="gender"
+            type={InputTypes.checkbox}
+            name={InputNames.gender}
             className={cl.gender}
             ref={ref}
-            data-testid="gender"
+            data-testid={TestIds.gender}
           />{' '}
           <div className={cl.indicator} />
         </div>

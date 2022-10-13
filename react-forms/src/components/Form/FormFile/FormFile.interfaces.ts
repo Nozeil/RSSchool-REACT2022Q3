@@ -1,7 +1,5 @@
-export interface FormImagePropsI {
+export interface FormImagePropsI extends FormImageForwardPropsI {
   innerRef: React.ForwardedRef<HTMLInputElement>;
-  cl: { readonly [key: string]: string };
-  errorMessage: string;
 }
 
 export interface FormImageForwardPropsI {

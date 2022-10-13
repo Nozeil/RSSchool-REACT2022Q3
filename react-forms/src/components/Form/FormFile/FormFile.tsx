@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormImageForwardPropsI, FormImagePropsI } from './FormImage.interfaces';
+import { InputNames, InputTypes, TestIds } from '../Form.enums';
+import { FormImageForwardPropsI, FormImagePropsI } from './FormFile.interfaces';
 
 class FormFile extends React.Component<FormImagePropsI> {
   render() {
@@ -7,16 +8,16 @@ class FormFile extends React.Component<FormImagePropsI> {
     return (
       <label className={`${cl.rowLabel} ${errorMessage && cl.errorField}`}>
         <input
-          type="file"
-          name="image"
+          type={InputTypes.file}
+          name={InputNames.image}
           className={cl.file}
           ref={ref}
           accept=".png, .jpg, .jpeg"
-          data-testid="image"
+          data-testid={TestIds.image}
         />
         <div className={cl.button}>Upload image</div>
         {errorMessage && (
-          <div className={cl.errorMessage} data-testid={'error'}>
+          <div className={cl.errorMessage} data-testid={TestIds.error}>
             {errorMessage}
           </div>
         )}

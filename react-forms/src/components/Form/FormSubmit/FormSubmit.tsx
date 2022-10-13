@@ -1,16 +1,19 @@
 import React from 'react';
+import { InputTypes, TestIds } from '../Form.enums';
 import { FormSubmitPropsI } from './FormSubmit.interfaces';
 
 class FormSubmit extends React.Component<FormSubmitPropsI> {
   render() {
-    const { cl, canSubmit, areErrors, onClick } = this.props;
+    const { cl, canSubmit, onClick } = this.props;
+    const sumbitClass = `${cl.button} ${canSubmit ? '' : cl.disabled}`;
+
     return (
       <input
-        type="submit"
+        type={InputTypes.submit}
         value="Submit"
-        className={`${cl.button} ${canSubmit && areErrors ? '' : cl.disabled}`}
+        className={sumbitClass}
         onClick={onClick}
-        data-testid="submit"
+        data-testid={TestIds.submit}
       />
     );
   }

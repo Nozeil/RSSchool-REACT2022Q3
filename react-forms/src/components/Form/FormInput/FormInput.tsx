@@ -1,4 +1,5 @@
 import React from 'react';
+import { TestIds } from '../Form.enums';
 import { FormInputPropsI, FormInputForwradRefPropsI } from './FormInput.interfaces';
 
 class FormInput extends React.Component<FormInputPropsI> {
@@ -23,7 +24,7 @@ class FormInput extends React.Component<FormInputPropsI> {
           data-testid={inputName}
         />
         {errorMessage && (
-          <div className={cl.errorMessage} data-testid={'error'}>
+          <div className={cl.errorMessage} data-testid={TestIds.error}>
             {errorMessage}
           </div>
         )}

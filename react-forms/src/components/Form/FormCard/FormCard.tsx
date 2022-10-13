@@ -1,13 +1,14 @@
 import React from 'react';
 import { FormCardPropsI } from './FormCard.interfaces';
 import cl from './../../Card/Card.module.css';
+import { TestIds } from '../Form.enums';
 
 class FormCard extends React.Component<FormCardPropsI> {
   render() {
     const { name, surname, date, country, gender, file } = this.props.data;
 
     return (
-      <div className={cl.card} data-testid={'formCard'}>
+      <div className={cl.card} data-testid={TestIds.formCard}>
         <img className={cl.card__image} src={URL.createObjectURL(file)} alt="user-image" />
         <ul className="list">
           <li className={cl['card__info-team']}>Name: {name}</li>

@@ -8,6 +8,16 @@ import FormSwitcher from './FormSwitcher/FormSwitcher';
 import FormFile from './FormFile/FormFile';
 import FormSubmit from './FormSubmit/FormSubmit';
 import FormSuccessMessage from './FormSuccessMessage/FormSuccessMessage';
+import {
+  Countries,
+  ErrorKeys,
+  ErrorMessages,
+  Gendors,
+  InputNames,
+  InputTypes,
+  LabelTexts,
+  TestIds,
+} from './Form.enums';
 
 class Form extends React.Component<Record<string, never>, FormStateI> {
   name: React.RefObject<HTMLInputElement>;
@@ -53,13 +63,13 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
   validateByValueLength = (
     { current: input }: CurrentInputI,
-    errorKey: 'name' | 'surname',
-    length: number
+    errorKey: ErrorKeys.name | ErrorKeys.surname,
+    length = 2
   ) => {
     const isValid = input && input.value.length > length;
     isValid
       ? this.setError(errorKey, ``)
-      : this.setError(errorKey, `${errorKey} length must be greater than ${length}`);
+      : this.setError(errorKey, `${errorKey} ${ErrorMessages.lengthError} ${length}`);
     return isValid;
   };
 
@@ -91,46 +101,42 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
         if (isValid) {
           this.setError(errorKey, '');
         } else {
-          this.setError(errorKey, 'too young');
+          this.setError(errorKey, ErrorMessages.wrongDate);
         }
 
         return isValid;
       } else {
-        this.setError(errorKey, 'enter your date of birth');
+        this.setError(errorKey, ErrorMessages.emptyDate);
         return false;
       }
     }
   };
 
   validateCountry = ({ current: country }: CurrentSelectI, errorKey: string) => {
-    const isValid = country && country.value !== 'default';
-    isValid ? this.setError(errorKey, '') : this.setError(errorKey, 'choose your country');
+    const isValid = country && country.value !== Countries.default;
+    isValid ? this.setError(errorKey, '') : this.setError(errorKey, ErrorMessages.country);
     return isValid;
   };
 
   validateConsent = ({ current: consent }: CurrentInputI, errorKey: string) => {
     const isValid = consent && consent.checked;
-    isValid ? this.setError(errorKey, '') : this.setError(errorKey, 'confirm an agreement');
+    isValid ? this.setError(errorKey, '') : this.setError(errorKey, ErrorMessages.consent);
     return isValid;
   };
 
   validateImage = ({ current: image }: CurrentInputI, errorKey: string) => {
     const isValid = image && image.files && !!image.files.length;
-    isValid ? this.setError(errorKey, '') : this.setError(errorKey, 'choose an image');
+    isValid ? this.setError(errorKey, '') : this.setError(errorKey, ErrorMessages.image);
     return isValid;
   };
 
-  areErrors = () => {
-    return Object.values(this.state.errors).some((error) => error);
-  };
-
   validate = () => [
-    this.validateByValueLength(this.name, 'name', 2),
-    this.validateByValueLength(this.surname, 'surname', 2),
-    this.validateDate(this.date, 'date'),
-    this.validateCountry(this.country, 'country'),
-    this.validateConsent(this.consent, 'consent'),
-    this.validateImage(this.image, 'image'),
+    this.validateByValueLength(this.name, ErrorKeys.name),
+    this.validateByValueLength(this.surname, ErrorKeys.surname),
+    this.validateDate(this.date, ErrorKeys.date),
+    this.validateCountry(this.country, ErrorKeys.country),
+    this.validateConsent(this.consent, ErrorKeys.consent),
+    this.validateImage(this.image, ErrorKeys.image),
   ];
 
   resetForm(
@@ -145,7 +151,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
     name.value = '';
     surname.value = '';
     date.value = '';
-    country.value = 'default';
+    country.value = Countries.default;
     consent.checked = false;
     gender.checked = false;
     fileList.value = '';
@@ -153,6 +159,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
   onClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    this.setState(() => ({ canSubmit: false }));
     const isValid = !this.validate().some((valid) => !valid);
 
     if (isValid) {
@@ -171,7 +178,6 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
         this.setState((prevState) => {
           const state = {
             isSuccessMessage: true,
-            canSubmit: false,
             data: [
               ...prevState.data,
               {
@@ -180,7 +186,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
                   surname: surname.value,
                   date: date.value,
                   country: country.value,
-                  gender: gender.checked ? 'Female' : 'Male',
+                  gender: gender.checked ? Gendors.female : Gendors.male,
                   file,
                 },
                 id: Date.now(),
@@ -220,35 +226,35 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
     return (
       <>
-        <form className={cl.form} onChange={this.onChange} data-testid="form">
+        <form className={cl.form} onChange={this.onChange} data-testid={TestIds.form}>
           <FormInput
             ref={this.name}
             cl={cl}
             errorMessage={nameError}
-            labelText={'Name'}
+            labelText={LabelTexts.name}
             labelDirection={cl.columnLabel}
-            inputType={'text'}
-            inputName={'name'}
+            inputType={InputTypes.text}
+            inputName={InputNames.name}
           />
 
           <FormInput
             ref={this.surname}
             cl={cl}
             errorMessage={surnameError}
-            labelText={'Surname'}
+            labelText={LabelTexts.surname}
             labelDirection={cl.columnLabel}
-            inputType={'text'}
-            inputName={'surname'}
+            inputType={InputTypes.text}
+            inputName={InputNames.surname}
           />
 
           <FormInput
             ref={this.date}
             cl={cl}
             errorMessage={dateError}
-            labelText={'Birthday'}
+            labelText={LabelTexts.date}
             labelDirection={cl.columnLabel}
-            inputType={'date'}
-            inputName={'date'}
+            inputType={InputTypes.date}
+            inputName={InputNames.date}
           />
 
           <FormSelect ref={this.country} cl={cl} errorMessage={countryError} />
@@ -257,22 +263,17 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
             ref={this.consent}
             cl={cl}
             errorMessage={consentError}
-            labelText={'I agree to my personal data being processed'}
+            labelText={LabelTexts.consent}
             labelDirection={cl.rowLabel}
-            inputType={'checkbox'}
-            inputName={'consent'}
+            inputType={InputTypes.checkbox}
+            inputName={InputNames.consent}
           />
 
           <FormSwitcher ref={this.gender} cl={cl} />
 
           <FormFile ref={this.image} cl={cl} errorMessage={imageError} />
 
-          <FormSubmit
-            cl={cl}
-            canSubmit={this.state.canSubmit}
-            areErrors={!this.areErrors()}
-            onClick={this.onClick}
-          />
+          <FormSubmit cl={cl} canSubmit={this.state.canSubmit} onClick={this.onClick} />
 
           <FormSuccessMessage
             isSuccessMessage={this.state.isSuccessMessage}
