@@ -1,7 +1,5 @@
-import { CardData } from 'components/Card/types';
-
-export type MockData = CardData[];
+import { PhotosInfoPhotoI } from 'api/api.interfaces';
 
 export type CardListProps = {
-  data: MockData;
+  data: PhotosInfoPhotoI[];
 };

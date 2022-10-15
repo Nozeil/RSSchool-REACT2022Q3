@@ -9,13 +9,13 @@ class FormCard extends React.Component<FormCardPropsI> {
 
     return (
       <div className={cl.card} data-testid={TestIds.formCard}>
-        <img className={cl.card__image} src={URL.createObjectURL(file)} alt="user-image" />
+        <img className={cl.cardImage} src={URL.createObjectURL(file)} alt="user-image" />
         <ul className="list">
-          <li className={cl['card__info-team']}>Name: {name}</li>
-          <li className={cl['card__info-team']}>Surname: {surname}</li>
-          <li className={cl['card__info-team']}>Birthday: {date}</li>
-          <li className={cl['card__info-team']}>Country: {country}</li>
-          <li className={cl['card__info-team']}>Gender: {gender}</li>
+          <li className={cl.cardInfoItem}>Name: {name}</li>
+          <li className={cl.cardInfoItem}>Surname: {surname}</li>
+          <li className={cl.cardInfoItem}>Birthday: {date}</li>
+          <li className={cl.cardInfoItem}>Country: {country}</li>
+          <li className={cl.cardInfoItem}>Gender: {gender}</li>
         </ul>
       </div>
     );

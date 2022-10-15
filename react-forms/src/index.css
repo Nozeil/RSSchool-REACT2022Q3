@@ -5,13 +5,14 @@
 }
 
 .body {
-  background-color: var(--bg-color);
+  background-color: var(--light-m-color);
   font-family: 'Montserrat', sans-serif;
 
-  --header-bg-color: #542781;
+  --dark-s-color: #542781;
   --card-color: #fff7f7;
-  --bg-color: #fcfcfc;
   --light-s-color: #f0f8ff;
+  --light-m-color: #fcfcfc;
+  --light-l-color: #a77afe;
   --error-color: #DC0033;
 }
 
