@@ -1,9 +1,9 @@
-.search-bar {
+.searchBar {
   position: relative;
   margin-bottom: 20px;
 }
 
-.search-input {
+.searchInput {
   width: 200px;
   height: 40px;
   padding: 0 20px 0 40px;
@@ -15,7 +15,7 @@
   border-radius: 20px;
 }
 
-.search-input::-webkit-search-cancel-button {
+.searchInput::-webkit-search-cancel-button {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
@@ -25,7 +25,7 @@
   background: no-repeat center/contain url('./../../assets/svg/cancel.svg');
 }
 
-.search-button {
+.searchButton {
   position: absolute;
   top: 0;
   left: 5px;

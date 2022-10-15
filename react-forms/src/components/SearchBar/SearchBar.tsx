@@ -1,13 +1,13 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
+import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
+import { default as API } from './../../api/api';
 
-class SearchBar extends React.Component {
-  state: { value: string };
+class SearchBar extends React.Component<SearchBarPropsI> {
   storageKey: string;
 
-  constructor(props = {}) {
+  constructor(props: SearchBarPropsI) {
     super(props);
-    this.state = { value: '' };
     this.storageKey = 'search';
   }
 
@@ -16,38 +16,48 @@ class SearchBar extends React.Component {
       localStorage.removeItem(this.storageKey);
     }
 
-    this.setState({
-      value: e.target.value,
-    });
+    this.props.setSearchValue(e.target.value);
   };
 
-  componentDidMount = (): void => {
+  onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+
+    if (e.code === 'Enter' && value) {
+      try {
+        const photos = (await API.getPhotos(value)).photos.photo;
+        const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
+        const data = await Promise.all(photosInfo);
+        this.props.setData(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  componentDidMount = () => {
     const value = localStorage.getItem(this.storageKey);
 
     if (value) {
-      this.setState({ value });
+      this.props.setSearchValue(value);
     }
   };
 
   componentWillUnmount = (): void => {
-    const value = localStorage.getItem(this.storageKey);
-
-    if (!value) {
-      localStorage.setItem(this.storageKey, this.state.value);
-    }
+    localStorage.setItem(this.storageKey, this.props.homeState.searchValue);
   };
 
-  render(): React.ReactNode {
+  render() {
     return (
-      <div className={cl['search-bar']}>
+      <div className={cl.searchBar}>
         <input
-          className={cl['search-input']}
+          className={cl.searchInput}
           type="search"
           placeholder="Search..."
-          value={this.state.value}
+          value={this.props.homeState.searchValue}
           onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
         />
-        <button className={cl['search-button']} />
+        <button className={cl.searchButton} />
       </div>
     );
   }

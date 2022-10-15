@@ -1,17 +1,13 @@
 import Card from 'components/Card/Card';
 import React from 'react';
 import cl from './CardList.module.css';
-import { CardListProps } from './types';
+import { CardListPropsI } from './CardList.interfaces';
 
-class CardList extends React.Component<CardListProps> {
-  constructor(props: CardListProps) {
-    super(props);
-  }
-
+class CardList extends React.Component<CardListPropsI> {
   render() {
     const cards = this.props.data.map((data) => <Card key={data.id} cardData={data} />);
     return (
-      <div data-testid="cards" className={cl['card-list']}>
+      <div data-testid="cards" className={cl.cardList}>
         {cards}
       </div>
     );

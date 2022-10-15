@@ -60,7 +60,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--header-bg-color);
+  background-color: var(--dark-s-color);
   transform: translate(calc(4px / 2), calc((26px - 4px)/2 - 50%));
   transition: ease-in-out 0.3s;
 }

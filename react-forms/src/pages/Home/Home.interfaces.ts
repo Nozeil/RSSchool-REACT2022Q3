@@ -1,5 +1,6 @@
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
 
-export type CardListProps = {
+export interface HomeStateI {
+  searchValue: string;
   data: PhotosInfoPhotoI[];
-};
+}

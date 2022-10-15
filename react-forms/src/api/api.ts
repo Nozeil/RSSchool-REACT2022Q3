@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { InterestingnessI, PhotosInfoI } from './api.interfaces';
+import { InterestingnessI, PhotosInfoI, SearchedPhotosI } from './api.interfaces';
 
 class API {
   baseURL: string;
@@ -23,7 +23,7 @@ class API {
 
   async getInterestingness() {
     const method = 'flickr.interestingness.getList';
-    const res = await this.axiosInstance.get<InterestingnessI>('', {
+    const res = await this.axiosInstance<InterestingnessI>('', {
       params: {
         method,
       },
@@ -33,12 +33,24 @@ class API {
 
   async getInfo(photoId: string) {
     const method = 'flickr.photos.getInfo';
-    const res = await this.axiosInstance.get<PhotosInfoI>('', {
+    const res = await this.axiosInstance<PhotosInfoI>('', {
       params: {
         method,
         photo_id: photoId,
       },
     });
+    return res.data;
+  }
+
+  async getPhotos(tags: string) {
+    const method = 'flickr.photos.search';
+    const res = await this.axiosInstance<SearchedPhotosI>('', {
+      params: {
+        method,
+        tags,
+      },
+    });
+
     return res.data;
   }
 }

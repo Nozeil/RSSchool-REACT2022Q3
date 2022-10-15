@@ -6,12 +6,12 @@ export interface InterestingnessI {
   photos: {
     page: number;
     pages: number;
-    photo: InterestingnessPhotoI[];
+    photo: PhotoI[];
     total: number;
   };
 }
 
-interface InterestingnessPhotoI {
+interface PhotoI {
   farm: number;
   id: string;
   isfamily: number;
@@ -104,4 +104,15 @@ interface TagI {
 interface UrlI {
   type: string;
   _content: string;
+}
+
+export interface SearchedPhotosI {
+  stat: string;
+  photos: {
+    page: number;
+    pages: number;
+    perpage: number;
+    photo: PhotoI[];
+    total: number;
+  };
 }

@@ -12,8 +12,7 @@ class Card extends React.Component<{ cardData: PhotosInfoPhotoI }> {
 
   render() {
     const { title, secret, server, id, owner } = this.photos;
-    const newTitle = title._content ? title._content : 'Nice photo';
-    console.log(this.photos);
+    const newTitle = title._content ? title._content : 'Photo';
     return (
       <div data-testid="card" className={cl.card}>
         <div className={cl.cardShortInfo}>

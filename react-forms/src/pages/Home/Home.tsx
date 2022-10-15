@@ -1,15 +1,17 @@
 import CardList from 'components/CardList/CardList';
-import { CardListProps } from 'components/CardList/types';
 import SearchBar from 'components/SearchBar/SearchBar';
 import React from 'react';
-import { default as API } from 'api/api';
+import { HomeStateI } from './Home.interfaces';
+import { default as API } from './../../api/api';
+import { PhotosInfoPhotoI } from 'api/api.interfaces';
 
 class Home extends React.Component {
-  state: CardListProps;
+  state: HomeStateI;
 
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
+      searchValue: '',
       data: [],
     };
   }
@@ -20,9 +22,7 @@ class Home extends React.Component {
         const photos = (await API.getInterestingness()).photos.photo;
         const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
         const data = await Promise.all(photosInfo);
-        this.setState(() => ({
-          data,
-        }));
+        this.setState(() => ({ data }));
       } catch (e) {
         console.error(e);
       }
@@ -30,10 +30,14 @@ class Home extends React.Component {
     loader();
   }
 
-  render(): React.ReactElement {
+  render() {
     return (
       <>
-        <SearchBar />
+        <SearchBar
+          homeState={this.state}
+          setSearchValue={(searchValue: string) => this.setState(() => ({ searchValue }))}
+          setData={(data: PhotosInfoPhotoI[]) => this.setState(() => ({ data }))}
+        />
         <CardList data={this.state.data} />
       </>
     );
