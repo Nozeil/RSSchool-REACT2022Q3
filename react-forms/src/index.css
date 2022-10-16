@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
 .body {
   background-color: var(--light-m-color);
   font-family: 'Montserrat', sans-serif;
@@ -14,16 +19,15 @@
   --light-m-color: #fcfcfc;
   --light-l-color: #a77afe;
   --error-color: #DC0033;
+  --link-color: #006dac;
+  --shadow-color: #e7dddd;
+  --overlay-color: rgba(0, 0, 0, 0.8);
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
-}
-
-.link {
-  text-decoration: none;
 }
 
 .list {

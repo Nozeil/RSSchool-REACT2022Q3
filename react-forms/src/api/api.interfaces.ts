@@ -92,7 +92,7 @@ export interface PhotosInfoPhotoI {
   visibility: { ispublic: number; isfriend: number; isfamily: number };
 }
 
-interface TagI {
+export interface TagI {
   author: string;
   authorname: string;
   id: string;
