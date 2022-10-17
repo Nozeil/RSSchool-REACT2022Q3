@@ -98,6 +98,26 @@
   border: none;
   outline: none;
   border-radius: 13px;
-  background-color: var(--header-bg-color);
+  background-color: var(--dark-s-color);
   cursor: pointer;
+}
+
+.card {
+  background-color: var(--card-color);
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.cardImage {
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.cardListItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
