@@ -24,10 +24,13 @@ class SearchBar extends React.Component<SearchBarPropsI> {
 
     if (e.code === 'Enter' && value) {
       try {
+        e.currentTarget.blur();
+        const { setData, setIsLoading } = this.props;
+        setIsLoading(true);
         const photos = (await API.getPhotos(value)).photos.photo;
         const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
         const data = await Promise.all(photosInfo);
-        this.props.setData(data);
+        setData(data, false);
       } catch (e) {
         console.error(e);
       }
@@ -47,8 +50,9 @@ class SearchBar extends React.Component<SearchBarPropsI> {
   };
 
   render() {
+    const searchBarClass = this.props.homeState.isLoading ? cl.searchBarDisabled : cl.searchBar;
     return (
-      <div className={cl.searchBar}>
+      <div className={searchBarClass}>
         <input
           className={cl.searchInput}
           type="search"

@@ -3,7 +3,7 @@
   top: 50vh;
   left: 50vw;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   background-color: var(--overlay-color);
   backdrop-filter: blur(2px);
   transform: translate(-50%, -50%);

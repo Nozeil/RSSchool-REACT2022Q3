@@ -25,11 +25,15 @@ class CardList extends React.Component<CardListPropsI, CardListStateI> {
   setModal = (isModalOpen: boolean) => this.setState(() => ({ isModalOpen }));
 
   render() {
+    if (!this.props.data.length) {
+      return <div>Nothing found</div>;
+    }
+
     const cards = this.props.data.map((data) => (
       <Card key={data.id} cardData={data} setListState={this.setListState} />
     ));
-    const { modalDescription, modalTags, modalSrc, modalTitle, modalSubtitle } = this.state;
-    const { isModalOpen } = this.state;
+    const { modalDescription, modalTags, modalSrc, modalTitle, modalSubtitle, isModalOpen } =
+      this.state;
     return (
       <div data-testid="cards" className={cl.cardList}>
         {isModalOpen && (
