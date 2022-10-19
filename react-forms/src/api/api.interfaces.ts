@@ -1,7 +1,7 @@
 export interface InterestingnessI {
   extra: {
     explore_date: string;
-    next_prelude_interval: 46917;
+    next_prelude_interval: number;
   };
   photos: {
     page: number;

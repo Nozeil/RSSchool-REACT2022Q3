@@ -1,29 +1,18 @@
-import axios, { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
+import { ApiMethods } from './api.enums';
 import { InterestingnessI, PhotosInfoI, SearchedPhotosI } from './api.interfaces';
+import axiosInstance from './axios-instance';
 
 class API {
-  baseURL: string;
-  key: string;
-  format: string;
   axiosInstance: AxiosInstance;
 
-  constructor() {
-    this.baseURL = 'https://api.flickr.com/services/rest/';
-    this.key = 'ef34b6075bcc23dcc4b06a385f209925';
-    this.format = 'json';
-    this.axiosInstance = axios.create({
-      baseURL: this.baseURL,
-      params: {
-        api_key: this.key,
-        format: this.format,
-        nojsoncallback: 1,
-      },
-    });
+  constructor(axiosInstance: AxiosInstance) {
+    this.axiosInstance = axiosInstance;
   }
 
   async getInterestingness() {
-    const method = 'flickr.interestingness.getList';
-    const res = await this.axiosInstance<InterestingnessI>('', {
+    const method = ApiMethods.flickrInterestingnessGetList;
+    const res = await this.axiosInstance.get<InterestingnessI>('', {
       params: {
         method,
       },
@@ -32,8 +21,8 @@ class API {
   }
 
   async getInfo(photoId: string) {
-    const method = 'flickr.photos.getInfo';
-    const res = await this.axiosInstance<PhotosInfoI>('', {
+    const method = ApiMethods.flickrPhotosGetInfo;
+    const res = await this.axiosInstance.get<PhotosInfoI>('', {
       params: {
         method,
         photo_id: photoId,
@@ -43,8 +32,8 @@ class API {
   }
 
   async getPhotos(tags: string) {
-    const method = 'flickr.photos.search';
-    const res = await this.axiosInstance<SearchedPhotosI>('', {
+    const method = ApiMethods.flickrPhotosSearch;
+    const res = await this.axiosInstance.get<SearchedPhotosI>('', {
       params: {
         method,
         tags,
@@ -55,4 +44,4 @@ class API {
   }
 }
 
-export default new API();
+export default new API(axiosInstance);

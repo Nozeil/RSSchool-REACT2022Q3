@@ -1,53 +1,24 @@
-/* import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import React from 'react';
+import { mockData } from '__mocks__/flickrMockData';
 import CardList from './CardList';
 
-const mockData = [
-  {
-    id: '1',
-    price: '100$',
-    model: 'Volkswagen',
-    year: '1985',
-    img: '/images/car-1.jpg',
-  },
-  {
-    id: '2',
-    price: '200$',
-    model: 'Ferrari',
-    year: '1990',
-    img: '/images/car-2.jpg',
-  },
-  {
-    id: '3',
-    price: '300$',
-    model: 'Fiat',
-    year: '1992',
-    img: '/images/car-3.jpg',
-  },
-  {
-    id: '4',
-    price: '400$',
-    model: 'Chevrolet',
-    year: '1982',
-    img: '/images/car-4.jpg',
-  },
-];
+const data = [mockData.photosInfo.photo] as PhotosInfoPhotoI[];
 
 describe('CardList', () => {
   it('num of cards should be equal data length', () => {
-    render(<CardList data={mockData} />);
-
-    expect(screen.getAllByTestId('card')).toHaveLength(mockData.length);
+    render(<CardList data={data} />);
+    expect(screen.getAllByTestId('card')).toHaveLength(data.length);
   });
 
   it('displayed data should be equal mock data', () => {
-    render(<CardList data={mockData} />);
-
-    mockData.forEach((data) => {
-      expect(screen.getByText(data.model));
-      expect(screen.getByText(`Released in ${data.year}`));
-      expect(screen.getByText(data.price));
+    const { getByTestId } = render(<CardList data={data} />);
+    const { owner, title } = mockData.photosInfo.photo;
+    const card = getByTestId('card');
+    data.forEach(() => {
+      expect(card).toContainHTML(owner.username);
+      expect(card).toContainHTML(title._content);
     });
   });
 });
- */

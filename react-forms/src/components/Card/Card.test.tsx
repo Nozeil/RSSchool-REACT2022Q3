@@ -1,27 +1,22 @@
-/* import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import React from 'react';
+import { mockData } from '__mocks__/flickrMockData';
 import Card from './Card';
 
+const data = mockData.photosInfo.photo as PhotosInfoPhotoI;
+const setListState = jest.fn();
+
 describe('Card', () => {
-  const mockData = {
-    id: '1',
-    price: '10$',
-    model: 'Volkswagen',
-    year: '1990',
-    img: '/images/car-1.jpg',
-  };
-  it('card should be rendered with mock data', async () => {
-    render(<Card cardData={mockData} />);
+  it('card should be rendered with mock data', () => {
+    render(<Card cardData={data} setListState={setListState} />);
+    const { owner, title, server, id, secret } = mockData.photosInfo.photo;
+    const img = screen.getByTestId('img');
 
-    const img = await screen.findByTestId('img');
-
-    expect(screen.findByText(mockData.model));
-    expect(screen.findByText(mockData.price));
-    expect(screen.findByText(mockData.year));
-
+    expect(screen.getByText(`by ${owner.username}`)).toBeInTheDocument();
+    expect(screen.getByText(title._content)).toBeInTheDocument();
     if (img instanceof HTMLImageElement) {
-      expect(img.src).toMatch(mockData.img);
+      expect(img.src).toMatch(`https://live.staticflickr.com/${server}/${id}_${secret}_c.jpg`);
     }
   });
 });
- */

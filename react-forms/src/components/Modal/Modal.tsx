@@ -23,11 +23,11 @@ class Modal extends React.Component<ModalPropsI> {
 
     return (
       <>
-        <div className={cl.overlay} onClick={this.onClick} />
-        <div className={cl.modal}>
-          <div className={cl.closeBtn} onClick={this.onClick} />
+        <div className={cl.overlay} onClick={this.onClick} data-testid="overlay" />
+        <div className={cl.modal} data-testid="modal">
+          <div className={cl.closeBtn} onClick={this.onClick} data-testid="close-button" />
           <div className={cl.content}>
-            <img className={cl.img} src={src} alt="photo" />
+            <img className={cl.img} src={src} alt="photo" data-testid="modal-img" />
             <div className={cl.info}>
               <h3>{title}</h3>
               <h3>By {subtitle}</h3>

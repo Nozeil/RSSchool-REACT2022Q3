@@ -33,7 +33,7 @@ describe('App routing', () => {
     renderWithRouter(<App />, { route: '/about' });
     fireEvent.click(screen.getByTestId('home'));
     expect(screen.getByPlaceholderText('Search...'));
-    expect(screen.getByTestId('cards')).toBeInTheDocument();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
 
   it('should be rendered form page', () => {
