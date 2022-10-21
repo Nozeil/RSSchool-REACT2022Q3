@@ -4,7 +4,7 @@ import React from 'react';
 import { mockData } from '__mocks__/flickrMockData';
 import Card from './Card';
 
-const data = mockData.photosInfo.photo as PhotosInfoPhotoI;
+const data = mockData.photosInfo.photo as unknown as PhotosInfoPhotoI;
 const setListState = jest.fn();
 
 describe('Card', () => {

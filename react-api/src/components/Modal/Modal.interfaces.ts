@@ -6,5 +6,5 @@ export interface ModalPropsI {
   subtitle: string;
   tags: TagI[];
   src: string;
-  setModal: (isModalOpen: boolean) => void;
+  toggleModalVisibility: (isModalOpen: boolean) => void;
 }

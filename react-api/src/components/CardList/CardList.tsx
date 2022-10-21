@@ -18,11 +18,10 @@ class CardList extends React.Component<CardListPropsI, CardListStateI> {
   }
 
   setListState = (listState: CardListStateI) => {
-    const setState = (listState: CardListStateI) => listState;
-    this.setState(setState({ ...listState }));
+    this.setState({ ...listState });
   };
 
-  setModal = (isModalOpen: boolean) => this.setState(() => ({ isModalOpen }));
+  toggleModalVisibility = (isModalOpen: boolean) => this.setState({ isModalOpen });
 
   render() {
     if (!this.props.data.length) {
@@ -43,7 +42,7 @@ class CardList extends React.Component<CardListPropsI, CardListStateI> {
             subtitle={modalSubtitle}
             tags={modalTags}
             src={modalSrc}
-            setModal={this.setModal}
+            toggleModalVisibility={this.toggleModalVisibility}
           />
         )}
         {cards}

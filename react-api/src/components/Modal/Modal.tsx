@@ -5,7 +5,7 @@ import cl from './Modal.module.css';
 
 class Modal extends React.Component<ModalPropsI> {
   onClick = () => {
-    this.props.setModal(false);
+    this.props.toggleModalVisibility(false);
   };
 
   render() {

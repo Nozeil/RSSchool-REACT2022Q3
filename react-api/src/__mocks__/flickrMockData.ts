@@ -1,4 +1,6 @@
-export const mockData = {
+import { MockDataI } from './flickrMockData.interfaces';
+
+export const mockData: MockDataI = {
   interestingness: {
     photos: {
       photo: [{ id: 'interestingness_id', secret: 'secret', server: 'server', title: 'title' }],

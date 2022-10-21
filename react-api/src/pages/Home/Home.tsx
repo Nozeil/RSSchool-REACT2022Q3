@@ -32,12 +32,12 @@ class Home extends React.Component {
     loader();
   }
 
-  setSearchValue = () => (searchValue: string) => this.setState(() => ({ searchValue }));
+  setSearchValue = (searchValue: string) => this.setState(() => ({ searchValue }));
 
-  setData = () => (data: PhotosInfoPhotoI[], isLoading: boolean) =>
+  setData = (data: PhotosInfoPhotoI[], isLoading: boolean) =>
     this.setState(() => ({ data, isLoading }));
 
-  setIsLoading = () => (isLoading: boolean) => this.setState(() => ({ isLoading }));
+  setIsLoading = (isLoading: boolean) => this.setState(() => ({ isLoading }));
 
   render() {
     const { isLoading, data } = this.state;
@@ -47,9 +47,9 @@ class Home extends React.Component {
       <>
         <SearchBar
           homeState={this.state}
-          setSearchValue={this.setSearchValue()}
-          setData={this.setData()}
-          setIsLoading={this.setIsLoading()}
+          setSearchValue={this.setSearchValue}
+          setData={this.setData}
+          setIsLoading={this.setIsLoading}
         />
         {content}
       </>

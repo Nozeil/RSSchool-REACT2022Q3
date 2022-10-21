@@ -4,7 +4,7 @@ import React from 'react';
 import { mockData } from '__mocks__/flickrMockData';
 import CardList from './CardList';
 
-const data = [mockData.photosInfo.photo] as PhotosInfoPhotoI[];
+const data = [mockData.photosInfo.photo] as unknown as PhotosInfoPhotoI[];
 
 describe('CardList', () => {
   it('num of cards should be equal data length', () => {

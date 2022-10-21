@@ -64,13 +64,12 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
-  overflow: hidden;
 }
 
 .tag {
-  display: flex;
   border-radius: 5px;
   box-shadow: 0 0 3px var(--shadow-color);
   padding: 5px;
+  margin: 5px;
+  overflow-wrap: anywhere;
 }
