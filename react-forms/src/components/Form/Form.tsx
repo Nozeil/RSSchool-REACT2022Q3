@@ -200,6 +200,10 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
     }
   };
 
+  areErrorsEmpty = () => {
+    return !Object.values(this.state.errors).some((error) => error);
+  };
+
   onChange = (e: ChangeEvent<HTMLFormElement>) => {
     const [key, canSubmit] = [e.target.name, !this.state.canSubmit];
 
@@ -223,6 +227,8 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
       consent: consentError,
       image: imageError,
     } = this.state.errors;
+
+    const canSubmit = this.state.canSubmit && this.areErrorsEmpty();
 
     return (
       <>
@@ -273,7 +279,7 @@ class Form extends React.Component<Record<string, never>, FormStateI> {
 
           <FormFile ref={this.image} cl={cl} errorMessage={imageError} />
 
-          <FormSubmit cl={cl} canSubmit={this.state.canSubmit} onClick={this.onClick} />
+          <FormSubmit cl={cl} canSubmit={canSubmit} onClick={this.onClick} />
 
           <FormSuccessMessage
             isSuccessMessage={this.state.isSuccessMessage}
