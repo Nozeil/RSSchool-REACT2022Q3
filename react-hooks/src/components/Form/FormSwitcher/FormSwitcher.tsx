@@ -1,29 +1,25 @@
 import React from 'react';
-import { InputNames, InputTypes, TestIds } from '../Form.enums';
-import { FormSwitcherPropsI } from './FormSwitcher.interfaces';
+import { InputTypes, TestIds } from '../Form.enums';
+import { FormSwitcherProps } from './Form.types';
 
-class FormSwitcher extends React.Component<FormSwitcherPropsI> {
-  render() {
-    const { innerRef: ref, cl } = this.props;
-    return (
-      <label className={cl.rowLabel}>
-        Male{' '}
-        <div className={cl.switcher}>
-          <input
-            type={InputTypes.checkbox}
-            name={InputNames.gender}
-            className={cl.gender}
-            ref={ref}
-            data-testid={TestIds.gender}
-          />{' '}
-          <div className={cl.indicator} />
-        </div>
-        Female
-      </label>
-    );
-  }
-}
-
-export default React.forwardRef<HTMLInputElement, { cl: { readonly [key: string]: string } }>(
-  (props, ref) => <FormSwitcher innerRef={ref} {...props} />
+const FormSwitcher = React.forwardRef<HTMLInputElement, FormSwitcherProps>(
+  ({ cl, name, onChange }, ref) => (
+    <label className={cl.rowLabel}>
+      Male{' '}
+      <div className={cl.switcher}>
+        <input
+          type={InputTypes.checkbox}
+          name={name}
+          className={cl.gender}
+          ref={ref}
+          onChange={onChange}
+          data-testid={TestIds.gender}
+        />{' '}
+        <div className={cl.indicator} />
+      </div>
+      Female
+    </label>
+  )
 );
+
+export default FormSwitcher;

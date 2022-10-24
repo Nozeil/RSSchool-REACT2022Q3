@@ -1,3 +1,5 @@
+import { Countries, InputNames } from './Form.enums';
+
 export interface FormStateI {
   data: FormCardsData;
   isSuccessMessage: boolean;
@@ -28,3 +30,13 @@ export interface FormCardI {
 }
 
 export type FormCardsData = FormCardI[];
+
+export interface FormValuesI {
+  name: InputNames.name | '';
+  surname: InputNames.surname | '';
+  date: InputNames.date | '';
+  country: InputNames.country | Countries.default;
+  consent: InputNames.consent | '';
+  gender: InputNames.gender | '';
+  image: FileList | '';
+}

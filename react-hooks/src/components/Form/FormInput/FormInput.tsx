@@ -1,38 +1,26 @@
 import React from 'react';
 import { TestIds } from '../Form.enums';
-import { FormInputPropsI, FormInputForwradRefPropsI } from './FormInput.interfaces';
+import { FormInputProps } from './FormInput.types';
 
-class FormInput extends React.Component<FormInputPropsI> {
-  render() {
-    const {
-      innerRef: ref,
-      cl,
-      errorMessage,
-      labelText,
-      labelDirection,
-      inputType,
-      inputName,
-    } = this.props;
-    return (
-      <label className={`${labelDirection} ${errorMessage && cl.errorField}`}>
-        {labelText}{' '}
-        <input
-          type={inputType}
-          name={inputName}
-          className={cl.field}
-          ref={ref}
-          data-testid={inputName}
-        />
-        {errorMessage && (
-          <div className={cl.errorMessage} data-testid={TestIds.error}>
-            {errorMessage}
-          </div>
-        )}
-      </label>
-    );
-  }
-}
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
+  ({ cl, errorMessage, labelText, labelDirection, inputType, name, onChange }, ref) => (
+    <label className={`${labelDirection} ${errorMessage && cl.errorField}`}>
+      {labelText}{' '}
+      <input
+        type={inputType}
+        name={name}
+        className={cl.field}
+        onChange={onChange}
+        ref={ref}
+        data-testid={name}
+      />
+      {errorMessage && (
+        <div className={cl.errorMessage} data-testid={TestIds.error}>
+          {errorMessage}
+        </div>
+      )}
+    </label>
+  )
+);
 
-export default React.forwardRef<HTMLInputElement, FormInputForwradRefPropsI>((props, ref) => (
-  <FormInput innerRef={ref} {...props} />
-));
+export default FormInput;

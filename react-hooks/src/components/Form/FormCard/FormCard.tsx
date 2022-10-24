@@ -3,7 +3,7 @@ import { FormCardPropsI } from './FormCard.interfaces';
 import cl from './../Form.module.css';
 import { TestIds } from '../Form.enums';
 
-function FormCard({ data }: FormCardPropsI) {
+const FormCard = ({ data }: FormCardPropsI) => {
   const { name, surname, date, country, gender, file } = data;
 
   return (
@@ -18,6 +18,6 @@ function FormCard({ data }: FormCardPropsI) {
       </ul>
     </div>
   );
-}
+};
 
 export default FormCard;

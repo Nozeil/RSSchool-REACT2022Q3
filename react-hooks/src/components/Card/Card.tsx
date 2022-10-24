@@ -3,7 +3,7 @@ import React from 'react';
 import { CardPropsI } from './Card.interfaces';
 import cl from './Card.module.css';
 
-function Card({ setListState, cardData }: CardPropsI) {
+const Card = ({ setListState, cardData }: CardPropsI) => {
   const onClick = (listState: CardListStateI) => {
     setListState(listState);
   };
@@ -35,6 +35,6 @@ function Card({ setListState, cardData }: CardPropsI) {
       <img data-testid="img" className={cl.cardImage} src={src} alt="photo" />
     </div>
   );
-}
+};
 
 export default Card;

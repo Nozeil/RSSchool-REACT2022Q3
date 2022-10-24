@@ -1,8 +1,4 @@
-export interface FormSelectPropsI extends FormSelectForwardRefPropsI {
-  innerRef: React.ForwardedRef<HTMLSelectElement>;
-}
-
-export interface FormSelectForwardRefPropsI {
+export interface FormSelectPropsI {
   cl: { readonly [key: string]: string };
   errorMessage: string;
 }

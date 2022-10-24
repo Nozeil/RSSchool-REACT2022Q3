@@ -1,60 +1,48 @@
 import CardList from 'components/CardList/CardList';
 import SearchBar from 'components/SearchBar/SearchBar';
-import React from 'react';
-import { HomeStateI } from './Home.interfaces';
+import React, { useEffect, useState } from 'react';
 import { default as API } from './../../api/api';
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 
-class Home extends React.Component {
-  state: HomeStateI;
+const Home = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [data, setData] = useState<PhotosInfoPhotoI[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      searchValue: '',
-      data: [],
-      isLoading: true,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const loader = async () => {
       try {
         const photos = (await API.getInterestingness()).photos.photo;
         const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
         const data = await Promise.all(photosInfo);
-        this.setState(() => ({ data, isLoading: false }));
+        setData(data);
+        setIsLoading(false);
       } catch (e) {
         console.error(e);
       }
     };
     loader();
-  }
+  }, []);
 
-  setSearchValue = (searchValue: string) => this.setState(() => ({ searchValue }));
+  const content = isLoading ? <LoadingSpinner /> : <CardList data={data} />;
 
-  setData = (data: PhotosInfoPhotoI[], isLoading: boolean) =>
-    this.setState(() => ({ data, isLoading }));
+  const updateData = (data: PhotosInfoPhotoI[], isLoading: boolean) => {
+    setData(data);
+    setIsLoading(isLoading);
+  };
 
-  setIsLoading = (isLoading: boolean) => this.setState(() => ({ isLoading }));
-
-  render() {
-    const { isLoading, data } = this.state;
-    const content = isLoading ? <LoadingSpinner /> : <CardList data={data} />;
-
-    return (
-      <>
-        <SearchBar
-          homeState={this.state}
-          setSearchValue={this.setSearchValue}
-          setData={this.setData}
-          setIsLoading={this.setIsLoading}
-        />
-        {content}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <SearchBar
+        homeState={{ searchValue, data, isLoading }}
+        setSearchValue={setSearchValue}
+        setData={updateData}
+        setIsLoading={setIsLoading}
+      />
+      {content}
+    </>
+  );
+};
 
 export default Home;

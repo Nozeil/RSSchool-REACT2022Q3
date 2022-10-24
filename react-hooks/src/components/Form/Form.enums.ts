@@ -1,14 +1,5 @@
-export enum ErrorKeys {
-  name = 'name',
-  surname = 'surname',
-  date = 'date',
-  country = 'country',
-  consent = 'consent',
-  image = 'image',
-}
-
 export enum ErrorMessages {
-  lengthError = 'length must be greater than',
+  lengthError = 'too short',
   wrongDate = 'too young',
   emptyDate = 'enter your date of birth',
   country = 'choose your country',

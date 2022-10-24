@@ -1,31 +1,25 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
 import { default as API } from './../../api/api';
 
-class SearchBar extends React.Component<SearchBarPropsI> {
-  storageKey: string;
+const SearchBar = ({ homeState, setData, setSearchValue, setIsLoading }: SearchBarPropsI) => {
+  const storageKey = 'search';
+  const searchBar = useRef<HTMLInputElement>(null);
 
-  constructor(props: SearchBarPropsI) {
-    super(props);
-    this.storageKey = 'search';
-  }
-
-  onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
-      localStorage.removeItem(this.storageKey);
+      localStorage.removeItem(storageKey);
     }
-
-    this.props.setSearchValue(e.target.value);
+    setSearchValue(e.target.value);
   };
 
-  onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
     if (e.code === 'Enter' && value) {
       try {
         e.currentTarget.blur();
-        const { setData, setIsLoading } = this.props;
         setIsLoading(true);
         const photos = (await API.getPhotos(value)).photos.photo;
         const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
@@ -37,34 +31,39 @@ class SearchBar extends React.Component<SearchBarPropsI> {
     }
   };
 
-  componentDidMount = () => {
-    const value = localStorage.getItem(this.storageKey);
-
+  useEffect(() => {
+    const value = localStorage.getItem(storageKey);
     if (value) {
-      this.props.setSearchValue(value);
+      setSearchValue(value);
     }
-  };
+  }, []);
 
-  componentWillUnmount = (): void => {
-    localStorage.setItem(this.storageKey, this.props.homeState.searchValue);
-  };
+  useEffect(() => {
+    const input = searchBar.current;
 
-  render() {
-    const searchBarClass = this.props.homeState.isLoading ? cl.searchBarDisabled : cl.searchBar;
-    return (
-      <div className={searchBarClass}>
-        <input
-          className={cl.searchInput}
-          type="search"
-          placeholder="Search..."
-          value={this.props.homeState.searchValue}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-        />
-        <button className={cl.searchButton} />
-      </div>
-    );
-  }
-}
+    return () => {
+      if (input) {
+        localStorage.setItem(storageKey, input.value);
+      }
+    };
+  }, []);
+
+  const searchBarClass = homeState.isLoading ? cl.searchBarDisabled : cl.searchBar;
+
+  return (
+    <div className={searchBarClass}>
+      <input
+        ref={searchBar}
+        className={cl.searchInput}
+        type="search"
+        placeholder="Search..."
+        value={homeState.searchValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
+      <button className={cl.searchButton} />
+    </div>
+  );
+};
 
 export default SearchBar;
