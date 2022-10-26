@@ -1,6 +1,7 @@
 import React from 'react';
-import { InputTypes, TestIds } from '../Form.enums';
+import { InputTypes } from '../Form.enums';
 import { FormSubmitPropsI } from './FormSubmit.interfaces';
+import { TestIds } from 'enums';
 
 const FormSubmit = ({ cl, canSubmit }: FormSubmitPropsI) => {
   const sumbitClass = `${cl.button} ${canSubmit ? '' : cl.disabled}`;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { InputTypes, TestIds } from '../Form.enums';
+import { InputTypes } from '../Form.enums';
 import { FormSwitcherProps } from './Form.types';
+import { TestIds } from 'enums';
 
 const FormSwitcher = React.forwardRef<HTMLInputElement, FormSwitcherProps>(
   ({ cl, name, onChange }, ref) => (

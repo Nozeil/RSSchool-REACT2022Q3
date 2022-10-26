@@ -1,5 +1,5 @@
 import React from 'react';
-import { TestIds } from '../Form.enums';
+import { TestIds } from 'enums';
 import { FormSuccessMessagePropsI } from './FormSuccessMessage.interfaces';
 
 const FormSuccessMessage = ({

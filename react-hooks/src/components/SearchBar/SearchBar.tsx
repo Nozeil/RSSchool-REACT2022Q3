@@ -21,10 +21,8 @@ const SearchBar = ({ homeState, setData, setSearchValue, setIsLoading }: SearchB
       try {
         e.currentTarget.blur();
         setIsLoading(true);
-        const photos = (await API.getPhotos(value)).photos.photo;
-        const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
-        const data = await Promise.all(photosInfo);
-        setData(data, false);
+        setData(await API.getData(value));
+        setIsLoading(false);
       } catch (e) {
         console.error(e);
       }

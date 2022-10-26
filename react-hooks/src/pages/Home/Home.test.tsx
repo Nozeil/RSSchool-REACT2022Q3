@@ -6,6 +6,7 @@ import { AxiosRequestConfig } from 'axios';
 import { ApiMethods } from 'api/api.enums';
 import { mockData } from '__mocks__/flickrMockData';
 import userEvent from '@testing-library/user-event';
+import { TestIds } from 'enums';
 
 let mockGet: jest.SpyInstance;
 const { interestingness, photosInfo, searchedPhotos } = mockData;
@@ -62,13 +63,13 @@ describe('Home initital view', () => {
   });
   it('should show 1 card with mock data', async () => {
     render(<Home />);
-    checkCreatedCards(await screen.findAllByTestId('card'));
+    checkCreatedCards(await screen.findAllByTestId(TestIds.card));
   });
 });
 
 const searchPhoto = async () => {
   const { getByRole, getByTestId } = screen;
-  const spinner = getByTestId('spinner');
+  const spinner = getByTestId(TestIds.spinner);
   await waitForElementToBeRemoved(spinner);
   const search = getByRole('searchbox');
 
@@ -106,19 +107,19 @@ describe('Home view after user search', () => {
   it('should search and show searched data after pressing enter button', async () => {
     render(<Home />);
     await searchPhoto();
-    await waitFor(() => checkCreatedCards(screen.getAllByTestId('card')));
+    await waitFor(() => checkCreatedCards(screen.getAllByTestId(TestIds.card)));
   });
 });
 
 const showModal = async () => {
   await searchPhoto();
-  const card = await screen.findByTestId('card');
+  const card = await screen.findByTestId(TestIds.card);
   userEvent.click(card);
 };
 
 const closeModal = async (closeMatcher: string) => {
   await showModal();
-  const modal = screen.getByTestId('modal');
+  const modal = screen.getByTestId(TestIds.modal);
   userEvent.click(screen.getByTestId(closeMatcher));
   return modal;
 };
@@ -127,10 +128,10 @@ describe('Modal', () => {
   it('should show modal after click on card', async () => {
     const { getByTestId } = render(<Home />);
     await showModal();
-    const modal = getByTestId('modal');
+    const modal = getByTestId(TestIds.modal);
     expect(modal).toBeInTheDocument();
-    expect(getByTestId('overlay')).toBeInTheDocument();
-    expect(getByTestId('modal-img')).toBeInTheDocument();
+    expect(getByTestId(TestIds.overlay)).toBeInTheDocument();
+    expect(getByTestId(TestIds.modalImg)).toBeInTheDocument();
     const { description, owner, tags, title } = photosInfo.photo;
     expect(modal).toContainHTML(description._content);
     expect(modal).toContainHTML(owner.username);

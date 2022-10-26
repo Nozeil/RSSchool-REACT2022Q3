@@ -6,38 +6,31 @@ import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 
 const Home = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
   const [data, setData] = useState<PhotosInfoPhotoI[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const load = async () => {
+    try {
+      setData(await API.getData());
+      setIsLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
-    const loader = async () => {
-      try {
-        const photos = (await API.getInterestingness()).photos.photo;
-        const photosInfo = photos.map(async (photo) => (await API.getInfo(photo.id)).photo);
-        const data = await Promise.all(photosInfo);
-        setData(data);
-        setIsLoading(false);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    loader();
+    load();
   }, []);
 
   const content = isLoading ? <LoadingSpinner /> : <CardList data={data} />;
-
-  const updateData = (data: PhotosInfoPhotoI[], isLoading: boolean) => {
-    setData(data);
-    setIsLoading(isLoading);
-  };
 
   return (
     <>
       <SearchBar
         homeState={{ searchValue, data, isLoading }}
         setSearchValue={setSearchValue}
-        setData={updateData}
+        setData={setData}
         setIsLoading={setIsLoading}
       />
       {content}

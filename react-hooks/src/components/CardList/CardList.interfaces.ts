@@ -7,7 +7,6 @@ export interface CardListPropsI {
 export interface CardListStateI {
   modalDescription: string;
   modalTags: TagI[];
-  isModalOpen: boolean;
   modalSrc: string;
   modalTitle: string;
   modalSubtitle: string;

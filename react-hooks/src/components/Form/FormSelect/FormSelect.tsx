@@ -1,6 +1,7 @@
 import React from 'react';
-import { Countries, TestIds } from '../Form.enums';
+import { Countries } from '../Form.enums';
 import { FormSelectProps } from './FormSelect.types';
+import { TestIds } from 'enums';
 
 const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
   ({ cl, errorMessage, name, onChange }, ref) => {

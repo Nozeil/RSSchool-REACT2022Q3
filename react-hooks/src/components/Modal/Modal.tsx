@@ -1,3 +1,4 @@
+import { TestIds } from 'enums';
 import React from 'react';
 import { defualtModalValues } from './Modal.enums';
 import { ModalPropsI } from './Modal.interfaces';
@@ -18,11 +19,11 @@ const Modal = ({ toggleModalVisibility, description, tags, src, title, subtitle 
 
   return (
     <>
-      <div className={cl.overlay} onClick={onClick} data-testid="overlay" />
-      <div className={cl.modal} data-testid="modal">
-        <div className={cl.closeBtn} onClick={onClick} data-testid="close-button" />
+      <div className={cl.overlay} onClick={onClick} data-testid={TestIds.overlay} />
+      <div className={cl.modal} data-testid={TestIds.modal}>
+        <div className={cl.closeBtn} onClick={onClick} data-testid={TestIds.closeBtn} />
         <div className={cl.content}>
-          <img className={cl.img} src={src} alt="photo" data-testid="modal-img" />
+          <img className={cl.img} src={src} alt="photo" data-testid={TestIds.modalImg} />
           <div className={cl.info}>
             <h3>{title}</h3>
             <h3>By {subtitle}</h3>

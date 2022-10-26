@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputTypes, TestIds } from '../Form.enums';
+import { InputTypes } from '../Form.enums';
+import { TestIds } from 'enums';
 import { FormImageProps } from './FormFile.types';
 
 const FormFile = React.forwardRef<HTMLInputElement, FormImageProps>(

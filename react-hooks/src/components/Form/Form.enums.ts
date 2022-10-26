@@ -46,19 +46,3 @@ export enum Countries {
   Lithuania = 'Lithuania',
   Latvia = 'Latvia',
 }
-
-export enum TestIds {
-  form = 'form',
-  formCard = 'formCard',
-  formCardList = 'formCardList',
-  name = 'name',
-  surname = 'surname',
-  date = 'date',
-  image = 'image',
-  error = 'error',
-  consent = 'consent',
-  country = 'country',
-  submit = 'submit',
-  successMessage = 'successMessage',
-  gender = 'gender',
-}

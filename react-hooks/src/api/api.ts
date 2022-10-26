@@ -42,6 +42,14 @@ class API {
 
     return res.data;
   }
+
+  async getData(tags?: string) {
+    const photos = tags
+      ? (await this.getPhotos(tags)).photos.photo
+      : (await this.getInterestingness()).photos.photo;
+    const photosInfo = photos.map(async (photo) => (await this.getInfo(photo.id)).photo);
+    return await Promise.all(photosInfo);
+  }
 }
 
 export default new API(axiosInstance);

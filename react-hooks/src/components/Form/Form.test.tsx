@@ -2,7 +2,8 @@ import React from 'react';
 import Form from './Form';
 import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Countries, ErrorMessages, TestIds } from './Form.enums';
+import { Countries, ErrorMessages } from './Form.enums';
+import { TestIds } from 'enums';
 
 const checkElement = (id: string) => expect(render(<Form />).getByTestId(id)).toBeInTheDocument();
 

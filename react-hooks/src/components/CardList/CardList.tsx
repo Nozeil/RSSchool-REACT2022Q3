@@ -3,35 +3,39 @@ import React, { useState } from 'react';
 import cl from './CardList.module.css';
 import { CardListPropsI, CardListStateI } from './CardList.interfaces';
 import Modal from 'components/Modal/Modal';
+import { TestIds } from 'enums';
 
 const CardList = ({ data }: CardListPropsI) => {
-  const [state, setState] = useState<CardListStateI>({
+  const initialState: CardListStateI = {
     modalDescription: '',
     modalTags: [],
-    isModalOpen: false,
     modalSrc: '',
     modalTitle: '',
     modalSubtitle: '',
-  });
-
-  const setListState = (listState: CardListStateI) => {
-    setState({ ...listState });
   };
 
-  const toggleModalVisibility = (isModalOpen: boolean) =>
-    setState((prevState) => ({ ...prevState, isModalOpen }));
+  const [cardListData, setCardListData] = useState<CardListStateI>(initialState);
+
+  const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
+
+  const saveCardListData = (data: CardListStateI) => setCardListData(data);
 
   if (!data.length) {
     return <div>Nothing found</div>;
   }
 
   const cards = data.map((data) => (
-    <Card key={data.id} cardData={data} setListState={setListState} />
+    <Card
+      key={data.id}
+      cardData={data}
+      saveCardListData={saveCardListData}
+      toggleModalVisibility={toggleModalVisibility}
+    />
   ));
-  const { modalDescription, modalTags, modalSrc, modalTitle, modalSubtitle, isModalOpen } = state;
+  const { modalDescription, modalTags, modalSrc, modalTitle, modalSubtitle } = cardListData;
   return (
-    <div data-testid="cards" className={cl.cardList}>
-      {isModalOpen && (
+    <div data-testid={TestIds.cards} className={cl.cardList}>
+      {isModalVisible && (
         <Modal
           description={modalDescription}
           title={modalTitle}

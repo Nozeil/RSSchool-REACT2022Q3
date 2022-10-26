@@ -1,17 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
+import { TestIds } from 'enums';
 import React from 'react';
 import { mockData } from '__mocks__/flickrMockData';
 import Card from './Card';
 
 const data = mockData.photosInfo.photo as unknown as PhotosInfoPhotoI;
-const setListState = jest.fn();
+const saveCardListData = jest.fn();
+const toggleModalVisibility = jest.fn();
 
 describe('Card', () => {
   it('card should be rendered with mock data', () => {
-    render(<Card cardData={data} setListState={setListState} />);
+    render(
+      <Card
+        cardData={data}
+        saveCardListData={saveCardListData}
+        toggleModalVisibility={toggleModalVisibility}
+      />
+    );
     const { owner, title, server, id, secret } = mockData.photosInfo.photo;
-    const img = screen.getByTestId('img');
+    const img = screen.getByTestId(TestIds.cardImg);
 
     expect(screen.getByText(`by ${owner.username}`)).toBeInTheDocument();
     expect(screen.getByText(title._content)).toBeInTheDocument();

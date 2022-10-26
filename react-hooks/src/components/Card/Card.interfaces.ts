@@ -3,5 +3,6 @@ import { CardListStateI } from 'components/CardList/CardList.interfaces';
 
 export interface CardPropsI {
   cardData: PhotosInfoPhotoI;
-  setListState: (listState: CardListStateI) => void;
+  saveCardListData: (data: CardListStateI) => void;
+  toggleModalVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -15,9 +15,9 @@ import {
   InputNames,
   InputTypes,
   LabelTexts,
-  TestIds,
 } from './Form.enums';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { TestIds } from 'enums';
 
 const Form = () => {
   const [message, setMessageVisibility] = useState(false);
