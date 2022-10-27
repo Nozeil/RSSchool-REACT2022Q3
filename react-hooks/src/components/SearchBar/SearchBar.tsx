@@ -1,7 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
-import { default as API } from './../../api/api';
+import API from './../../api/api';
 
 const SearchBar = ({ homeState, setData, setSearchValue, setIsLoading }: SearchBarPropsI) => {
   const storageKey = 'search';

@@ -3,7 +3,7 @@ import React from 'react';
 import { CardPropsI } from './Card.interfaces';
 import cl from './Card.module.css';
 
-const Card = ({ saveCardListData, cardData, toggleModalVisibility }: CardPropsI) => {
+const Card = ({ saveCardListData, cardData, setIsModalVisible }: CardPropsI) => {
   const { title, secret, server, id, owner, description, tags } = cardData;
   const newTitle = title._content ? title._content : 'Photo';
   const src = `https://live.staticflickr.com/${server}/${id}_${secret}_c.jpg`;
@@ -16,7 +16,7 @@ const Card = ({ saveCardListData, cardData, toggleModalVisibility }: CardPropsI)
       modalTitle: newTitle,
       modalSubtitle: owner.username,
     });
-    toggleModalVisibility(true);
+    setIsModalVisible(true);
   };
 
   return (

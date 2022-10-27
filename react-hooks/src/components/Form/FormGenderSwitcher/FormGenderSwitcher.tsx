@@ -1,9 +1,9 @@
 import React from 'react';
 import { InputTypes } from '../Form.enums';
-import { FormSwitcherProps } from './Form.types';
+import { FormGenderSwitcherProps } from './Form.types';
 import { TestIds } from 'enums';
 
-const FormSwitcher = React.forwardRef<HTMLInputElement, FormSwitcherProps>(
+const FormGenderSwitcher = React.forwardRef<HTMLInputElement, FormGenderSwitcherProps>(
   ({ cl, name, onChange }, ref) => (
     <label className={cl.rowLabel}>
       Male{' '}
@@ -23,4 +23,4 @@ const FormSwitcher = React.forwardRef<HTMLInputElement, FormSwitcherProps>(
   )
 );
 
-export default FormSwitcher;
+export default FormGenderSwitcher;

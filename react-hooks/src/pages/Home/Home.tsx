@@ -1,7 +1,7 @@
 import CardList from 'components/CardList/CardList';
 import SearchBar from 'components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react';
-import { default as API } from './../../api/api';
+import API from './../../api/api';
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 

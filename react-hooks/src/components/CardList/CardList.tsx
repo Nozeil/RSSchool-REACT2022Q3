@@ -16,7 +16,7 @@ const CardList = ({ data }: CardListPropsI) => {
 
   const [cardListData, setCardListData] = useState<CardListStateI>(initialState);
 
-  const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const saveCardListData = (data: CardListStateI) => setCardListData(data);
 
@@ -29,7 +29,7 @@ const CardList = ({ data }: CardListPropsI) => {
       key={data.id}
       cardData={data}
       saveCardListData={saveCardListData}
-      toggleModalVisibility={toggleModalVisibility}
+      setIsModalVisible={setIsModalVisible}
     />
   ));
   const { modalDescription, modalTags, modalSrc, modalTitle, modalSubtitle } = cardListData;
@@ -42,7 +42,7 @@ const CardList = ({ data }: CardListPropsI) => {
           subtitle={modalSubtitle}
           tags={modalTags}
           src={modalSrc}
-          toggleModalVisibility={toggleModalVisibility}
+          setIsModalVisible={setIsModalVisible}
         />
       )}
       {cards}

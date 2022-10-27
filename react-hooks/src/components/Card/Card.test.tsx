@@ -7,7 +7,7 @@ import Card from './Card';
 
 const data = mockData.photosInfo.photo as unknown as PhotosInfoPhotoI;
 const saveCardListData = jest.fn();
-const toggleModalVisibility = jest.fn();
+const setIsModalVisible = jest.fn();
 
 describe('Card', () => {
   it('card should be rendered with mock data', () => {
@@ -15,7 +15,7 @@ describe('Card', () => {
       <Card
         cardData={data}
         saveCardListData={saveCardListData}
-        toggleModalVisibility={toggleModalVisibility}
+        setIsModalVisible={setIsModalVisible}
       />
     );
     const { owner, title, server, id, secret } = mockData.photosInfo.photo;

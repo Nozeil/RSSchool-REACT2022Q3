@@ -6,5 +6,5 @@ export interface ModalPropsI {
   subtitle: string;
   tags: TagI[];
   src: string;
-  toggleModalVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }

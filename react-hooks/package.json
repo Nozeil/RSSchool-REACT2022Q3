@@ -43,9 +43,12 @@
     ]
   },
   "devDependencies": {
+    "@types/dompurify": "^2.3.4",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "axios": "^0.27.2",
+    "date-fns": "^2.29.3",
+    "dompurify": "^2.4.0",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.5.1",

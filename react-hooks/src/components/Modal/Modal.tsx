@@ -3,10 +3,12 @@ import React from 'react';
 import { defualtModalValues } from './Modal.enums';
 import { ModalPropsI } from './Modal.interfaces';
 import cl from './Modal.module.css';
+import dompurify from 'dompurify';
 
-const Modal = ({ toggleModalVisibility, description, tags, src, title, subtitle }: ModalPropsI) => {
-  const onClick = () => toggleModalVisibility(false);
+const Modal = ({ setIsModalVisible, description, tags, src, title, subtitle }: ModalPropsI) => {
+  const onClick = () => setIsModalVisible(false);
   const newDescription = description ? description : defualtModalValues.description;
+  const cleanDescription = dompurify.sanitize(newDescription, { USE_PROFILES: { html: true } });
   const tagsContent = tags.length ? (
     tags.map((tag) => (
       <div key={tag.id} className={cl.tag}>
@@ -27,7 +29,7 @@ const Modal = ({ toggleModalVisibility, description, tags, src, title, subtitle 
           <div className={cl.info}>
             <h3>{title}</h3>
             <h3>By {subtitle}</h3>
-            <div dangerouslySetInnerHTML={{ __html: newDescription }} />
+            <div dangerouslySetInnerHTML={{ __html: cleanDescription }} />
             <div className={cl.tags}>{tagsContent}</div>
           </div>
         </div>
