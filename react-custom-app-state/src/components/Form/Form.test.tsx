@@ -1,21 +1,20 @@
 import React from 'react';
 import Form from './Form';
-import { act, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Countries, ErrorMessages } from './Form.enums';
 import { TestIds } from 'enums';
-
+import { AppProvider } from 'AppContext';
 const checkElement = (id: string) => expect(render(<Form />).getByTestId(id)).toBeInTheDocument();
 
 const submitChangedValue = async (elem: HTMLElement, btn: HTMLElement, value: string) => {
-  waitFor(() => {
-    if (value) {
-      elem instanceof HTMLSelectElement
-        ? userEvent.selectOptions(elem, value)
-        : userEvent.type(elem, value);
-    }
-    userEvent.click(btn);
-  });
+  const user = userEvent.setup();
+  if (value) {
+    elem instanceof HTMLSelectElement
+      ? await user.selectOptions(elem, value)
+      : await user.type(elem, value);
+  }
+  await user.click(btn);
 };
 
 const checkFieldError = async (
@@ -43,20 +42,16 @@ const createCard = async (
   btn: HTMLElement
 ) => {
   const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
-  await waitFor(() => {
-    userEvent.type(name, 'name');
-    userEvent.type(surname, 'surname');
-    userEvent.type(date, '2000-02-02');
-    userEvent.selectOptions(country, Countries.Belarus);
-    userEvent.click(consent);
-    userEvent.click(gender);
-    userEvent.upload(image, file);
-    Object.defineProperty(image, 'value', {
-      value: file.name,
-      writable: true,
-    });
-    userEvent.click(btn);
-  });
+  const user = userEvent.setup();
+
+  await user.type(name, 'name');
+  await user.type(surname, 'surname');
+  await user.type(date, '2000-02-02');
+  await user.selectOptions(country, Countries.Belarus);
+  await user.click(consent);
+  await user.click(gender);
+  await user.upload(image, file);
+  await user.click(btn);
 };
 
 describe('Form render', () => {
@@ -84,17 +79,17 @@ describe('Form render', () => {
 });
 
 describe('Form validation', () => {
-  it('submit button should be enabled after changing value in input ', () => {
+  it('submit button should be enabled after changing value in input ', async () => {
     const { getByTestId } = render(<Form />);
     const [nameField, submitBtn] = [getByTestId(TestIds.name), getByTestId(TestIds.submit)];
-
-    userEvent.type(nameField, '1');
+    const user = userEvent.setup();
+    await user.type(nameField, '1');
     expect(submitBtn).not.toHaveClass('disabled');
   });
   it('should show errors when all fields are not valid and not to create card', async () => {
     const { getByTestId, findByTestId, findAllByTestId } = render(<Form />);
     const [nameField, submitBtn] = [getByTestId(TestIds.name), getByTestId(TestIds.submit)];
-    await act(() => submitChangedValue(nameField, submitBtn, 'A'));
+    await submitChangedValue(nameField, submitBtn, 'A');
     const list = await findByTestId(TestIds.formCardList);
     const errors = await findAllByTestId(TestIds.error);
     expect(errors.length).toBe(6);
@@ -105,8 +100,8 @@ describe('Form validation', () => {
   it('submit button should be disabled after click on it', async () => {
     const { getByTestId } = render(<Form />);
     const [nameField, submitBtn] = [getByTestId(TestIds.name), getByTestId(TestIds.submit)];
-    await act(() => submitChangedValue(nameField, submitBtn, 'A'));
-    expect(submitBtn).toHaveClass('disabled');
+    await submitChangedValue(nameField, submitBtn, 'A');
+    await waitFor(() => expect(submitBtn).toHaveClass('disabled'));
   });
 
   it('should show name error', () =>
@@ -126,9 +121,14 @@ describe('Form validation', () => {
 });
 
 describe('Form card render', () => {
+  jest.setTimeout(10000);
   window.URL.createObjectURL = jest.fn();
   it('should render one card without errors', async () => {
-    const { getByTestId, queryByTestId, findAllByTestId } = render(<Form />);
+    const { getByTestId, queryByTestId, findAllByTestId } = render(
+      <AppProvider>
+        <Form />
+      </AppProvider>
+    );
     const formElements = [
       TestIds.name,
       TestIds.surname,
@@ -141,14 +141,18 @@ describe('Form card render', () => {
       TestIds.successMessage,
     ].map((id) => getByTestId(id));
     const [name, surname, date, country, consent, gender, image, submitBtn, message] = formElements;
-    await act(() => createCard(name, surname, date, country, consent, gender, image, submitBtn));
+    await createCard(name, surname, date, country, consent, gender, image, submitBtn);
     expect(message).toBeVisible();
     const cards = await findAllByTestId(TestIds.formCard);
     expect(cards.length).toBe(1);
     expect(queryByTestId(TestIds.error)).not.toBeInTheDocument();
   });
   it('should render ten cards without errors', async () => {
-    const { getByTestId, queryByTestId, findAllByTestId } = render(<Form />);
+    const { getByTestId, queryByTestId, findAllByTestId } = render(
+      <AppProvider>
+        <Form />
+      </AppProvider>
+    );
     const formElements = [
       TestIds.name,
       TestIds.surname,
@@ -162,9 +166,9 @@ describe('Form card render', () => {
     ].map((id) => getByTestId(id));
     const [name, surname, date, country, consent, gender, image, submitBtn, message] = formElements;
 
-    for (let i = 0; i < 10; i++) {
-      await act(() => createCard(name, surname, date, country, consent, gender, image, submitBtn));
-      expect(message).toHaveClass('showMessage');
+    for (let i = 0; i <= 10; i++) {
+      await createCard(name, surname, date, country, consent, gender, image, submitBtn);
+      expect(message).toBeVisible();
       expect(queryByTestId(TestIds.error)).not.toBeInTheDocument();
     }
     const cards = await findAllByTestId(TestIds.formCard);

@@ -4,13 +4,12 @@ import SearchBar from './SearchBar';
 import { mockStorage } from '__mocks__/localStorageMock';
 import userEvent from '@testing-library/user-event';
 
-const [homeState, setSearchValue, setData, setIsLoading] = [
+const [homeState, setSearchValue, setIsLoading] = [
   {
     searchValue: 'search',
     data: [],
     isLoading: false,
   },
-  jest.fn(),
   jest.fn(),
   jest.fn(),
 ];
@@ -25,7 +24,6 @@ describe('Local storage', () => {
     render(
       <SearchBar
         homeState={homeState}
-        setData={setData}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
       />
@@ -42,7 +40,6 @@ describe('Local storage', () => {
     render(
       <SearchBar
         homeState={homeState}
-        setData={setData}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
       />
@@ -59,7 +56,6 @@ describe('Local storage', () => {
     const { getByRole } = render(
       <SearchBar
         homeState={homeState}
-        setData={setData}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
       />
@@ -74,7 +70,6 @@ describe('Local storage', () => {
     const { unmount } = render(
       <SearchBar
         homeState={homeState}
-        setData={setData}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
       />
