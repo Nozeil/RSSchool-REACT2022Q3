@@ -25,3 +25,8 @@ export enum TestIds {
   modalImg = 'modal-img',
   closeBtn = 'close-button',
 }
+
+export enum AppActions {
+  addFormCard = 'addFormCard',
+  addHomeCards = 'addHomeCards',
+}

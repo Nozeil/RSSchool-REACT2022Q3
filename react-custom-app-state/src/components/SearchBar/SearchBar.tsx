@@ -2,10 +2,13 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
 import API from './../../api/api';
+import useAppContext from 'AppContext';
+import { AppActions } from 'enums';
 
-const SearchBar = ({ homeState, setData, setSearchValue, setIsLoading }: SearchBarPropsI) => {
+const SearchBar = ({ homeState, setSearchValue, setIsLoading }: SearchBarPropsI) => {
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
+  const { dispatch } = useAppContext();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -21,7 +24,8 @@ const SearchBar = ({ homeState, setData, setSearchValue, setIsLoading }: SearchB
       try {
         e.currentTarget.blur();
         setIsLoading(true);
-        setData(await API.getData(value));
+        const homeCards = await API.getData(value);
+        dispatch({ type: AppActions.addHomeCards, payload: { homeCards } });
         setIsLoading(false);
       } catch (e) {
         console.error(e);

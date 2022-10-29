@@ -2,17 +2,21 @@ import CardList from 'components/CardList/CardList';
 import SearchBar from 'components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react';
 import API from './../../api/api';
-import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import useAppContext from 'AppContext';
+import { AppActions } from 'enums';
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const [data, setData] = useState<PhotosInfoPhotoI[]>([]);
+  const { appState, dispatch } = useAppContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const load = async () => {
     try {
-      setData(await API.getData());
+      if (!appState.homeCards.length) {
+        const homeCards = await API.getData();
+        dispatch({ type: AppActions.addHomeCards, payload: { homeCards } });
+      }
       setIsLoading(false);
     } catch (e) {
       console.error(e);
@@ -23,14 +27,13 @@ const Home = () => {
     load();
   }, []);
 
-  const content = isLoading ? <LoadingSpinner /> : <CardList data={data} />;
+  const content = isLoading ? <LoadingSpinner /> : <CardList />;
 
   return (
     <>
       <SearchBar
-        homeState={{ searchValue, data, isLoading }}
+        homeState={{ searchValue, isLoading }}
         setSearchValue={setSearchValue}
-        setData={setData}
         setIsLoading={setIsLoading}
       />
       {content}

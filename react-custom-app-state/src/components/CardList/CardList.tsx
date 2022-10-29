@@ -1,11 +1,12 @@
 import Card from 'components/Card/Card';
 import React, { useState } from 'react';
 import cl from './CardList.module.css';
-import { CardListPropsI, CardListStateI } from './CardList.interfaces';
+import { CardListStateI } from './CardList.interfaces';
 import Modal from 'components/Modal/Modal';
 import { TestIds } from 'enums';
+import useAppContext from 'AppContext';
 
-const CardList = ({ data }: CardListPropsI) => {
+const CardList = () => {
   const initialState: CardListStateI = {
     modalDescription: '',
     modalTags: [],
@@ -17,14 +18,16 @@ const CardList = ({ data }: CardListPropsI) => {
   const [cardListData, setCardListData] = useState<CardListStateI>(initialState);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const { appState } = useAppContext();
+  const homeCards = appState.homeCards;
 
   const saveCardListData = (data: CardListStateI) => setCardListData(data);
 
-  if (!data.length) {
+  if (!homeCards.length) {
     return <div>Nothing found</div>;
   }
 
-  const cards = data.map((data) => (
+  const cards = homeCards.map((data) => (
     <Card
       key={data.id}
       cardData={data}

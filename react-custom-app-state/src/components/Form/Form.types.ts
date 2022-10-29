@@ -1,3 +1,4 @@
+import { FormCardsData } from 'App.types';
 import { Countries, InputNames } from './Form.enums';
 
 export interface FormStateI {
@@ -14,22 +15,6 @@ export interface CurrentInputI {
 export interface CurrentSelectI {
   current: HTMLSelectElement | null;
 }
-
-export interface FormCardDataI {
-  name: string;
-  surname: string;
-  date: string;
-  country: string;
-  gender: string;
-  file: File;
-}
-
-export interface FormCardI {
-  data: FormCardDataI;
-  id: number;
-}
-
-export type FormCardsData = FormCardI[];
 
 export interface FormValuesI {
   name: InputNames.name | '';

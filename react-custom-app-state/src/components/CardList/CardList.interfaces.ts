@@ -1,8 +1,4 @@
-import { PhotosInfoPhotoI, TagI } from 'api/api.interfaces';
-
-export interface CardListPropsI {
-  data: PhotosInfoPhotoI[];
-}
+import { TagI } from 'api/api.interfaces';
 
 export interface CardListStateI {
   modalDescription: string;

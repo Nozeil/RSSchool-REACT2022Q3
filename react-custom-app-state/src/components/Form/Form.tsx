@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormCardI, FormCardsData, FormValuesI } from './Form.types';
+import { FormValuesI } from './Form.types';
 import cl from './Form.module.css';
 import FormCardList from './FormCardList/FormCardList';
 import FormInput from './FormInput/FormInput';
@@ -17,13 +17,14 @@ import {
   LabelTexts,
 } from './Form.enums';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { TestIds } from 'enums';
+import { AppActions, TestIds } from 'enums';
 import differenceInYears from 'date-fns/differenceInYears';
+import { FormCardI } from 'App.types';
+import useAppContext from 'AppContext';
 
 const Form = () => {
   const [message, setMessageVisibility] = useState<boolean>(false);
-  const [data, setData] = useState<FormCardsData>([]);
-
+  const { appState, dispatch } = useAppContext();
   const {
     register,
     handleSubmit,
@@ -52,7 +53,7 @@ const Form = () => {
     if (fileList) {
       const file = fileList.item(0);
       if (file) {
-        const cardsData: FormCardI = {
+        const formCard: FormCardI = {
           data: {
             name,
             surname,
@@ -64,7 +65,7 @@ const Form = () => {
           id: Date.now(),
         };
         setMessageVisibility(true);
-        setData((prevData) => [...prevData, cardsData]);
+        dispatch({ type: AppActions.addFormCard, payload: { formCard } });
       }
     }
   };
@@ -170,7 +171,7 @@ const Form = () => {
         <FormSuccessMessage isSuccessMessage={message} cl={cl} onTransitionEnd={onTransitionEnd} />
       </form>
 
-      <FormCardList cards={data} />
+      <FormCardList cards={appState.formCards} />
     </>
   );
 };

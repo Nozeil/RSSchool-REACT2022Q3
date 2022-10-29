@@ -1,3 +1,4 @@
+import { AppProvider } from 'AppContext';
 import Form from 'components/Form/Form';
 import Layout from 'components/Layout/Layout';
 import About from 'pages/About';
@@ -8,15 +9,17 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="404" element={<NotFound />} />
-        <Route path="forms" element={<Form />} />
-        <Route path="*" element={<Navigate to="404" replace />} />
-      </Route>
-    </Routes>
+    <AppProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="404" element={<NotFound />} />
+          <Route path="forms" element={<Form />} />
+          <Route path="*" element={<Navigate to="404" replace />} />
+        </Route>
+      </Routes>
+    </AppProvider>
   );
 };
 
