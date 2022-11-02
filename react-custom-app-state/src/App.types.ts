@@ -1,5 +1,5 @@
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
-import { AppActions } from 'enums';
+import { AppActions, SortDropdownValues } from 'enums';
 import React from 'react';
 
 export interface FormCardDataI {
@@ -18,15 +18,35 @@ export interface FormCardI {
 
 export type FormCardsData = FormCardI[];
 
+export type HomeCardsSortType =
+  | SortDropdownValues.dateAsc
+  | SortDropdownValues.dateDesc
+  | SortDropdownValues.viewsAsc
+  | SortDropdownValues.viewsDesc;
+
 export interface InitialStateI {
   formCards: FormCardsData;
   homeCards: PhotosInfoPhotoI[];
+  paginatedHomeCards: PhotosInfoPhotoI[][];
+  homeCardsSort: string;
+  resultsPerPage: number;
+  page: number;
+  pages: number;
+  pagesMaxSize: number;
+  isItInitialPage: boolean;
 }
 
 export interface HomeActionI {
   type: AppActions.addHomeCards;
   payload: {
     homeCards: PhotosInfoPhotoI[];
+    paginatedHomeCards: PhotosInfoPhotoI[][];
+    homeCardsSort: string;
+    resultsPerPage: number;
+    page: number;
+    pages: number;
+    pagesMaxSize: number;
+    isItInitialPage: boolean;
   };
 }
 export interface FormActionI {

@@ -1,10 +1,18 @@
 import { AppProviderArgsI, AppActionType, InitialStateI } from 'App.types';
 import { appReducer } from 'AppReducer';
+import { ResultsPerPageDropdownValues, SortDropdownValues, TotalPagesDropdownValues } from 'enums';
 import React, { createContext, useContext, useReducer } from 'react';
 
 const initialState: InitialStateI = {
   formCards: [],
   homeCards: [],
+  paginatedHomeCards: [],
+  homeCardsSort: SortDropdownValues.viewsDesc,
+  resultsPerPage: ResultsPerPageDropdownValues.ten,
+  page: 1,
+  pages: 1,
+  pagesMaxSize: TotalPagesDropdownValues.fifty,
+  isItInitialPage: true,
 };
 
 const AppContext = createContext<{

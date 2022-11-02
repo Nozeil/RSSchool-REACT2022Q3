@@ -1,0 +1,21 @@
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.field {
+  height: 40px;
+  padding: 0 5px 0 5px;
+  border: none;
+  outline: none;
+  font: inherit;
+  background-color: var(--light-s-color);
+  border-radius: 5px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

@@ -30,3 +30,24 @@ export enum AppActions {
   addFormCard = 'addFormCard',
   addHomeCards = 'addHomeCards',
 }
+
+export enum SortDropdownValues {
+  viewsDesc = 'interestingness-desc',
+  viewsAsc = 'interestingness-asc',
+  dateDesc = 'date-posted-desc',
+  dateAsc = 'date-posted-asc',
+}
+
+export enum ResultsPerPageDropdownValues {
+  ten = 10,
+  twenty = 20,
+  thirty = 30,
+  fifty = 50,
+  oneHundred = 100,
+}
+
+export enum TotalPagesDropdownValues {
+  ten = 10,
+  twentyFive = 25,
+  fifty = 50,
+}

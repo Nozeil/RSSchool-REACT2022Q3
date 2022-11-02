@@ -5,10 +5,18 @@ import API from './../../api/api';
 import useAppContext from 'AppContext';
 import { AppActions } from 'enums';
 
-const SearchBar = ({ homeState, setSearchValue, setIsLoading }: SearchBarPropsI) => {
+const SearchBar = ({
+  homeState,
+  setSearchValue,
+  setLastSearch,
+  setIsLoading,
+  getPagesSize,
+}: SearchBarPropsI) => {
+  const startPage = 1;
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
-  const { dispatch } = useAppContext();
+  const { appState, dispatch } = useAppContext();
+  const { homeCardsSort, resultsPerPage, pagesMaxSize } = appState;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -18,14 +26,29 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading }: SearchBarPropsI)
   };
 
   const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
+    const tags = e.currentTarget.value;
 
-    if (e.code === 'Enter' && value) {
+    if (e.code === 'Enter' && tags) {
       try {
         e.currentTarget.blur();
+        setLastSearch(tags);
         setIsLoading(true);
-        const homeCards = await API.getData(value);
-        dispatch({ type: AppActions.addHomeCards, payload: { homeCards } });
+        const { data: homeCards, pages } = await API.getData({
+          tags,
+          sort: homeCardsSort,
+          page: startPage,
+          perPage: resultsPerPage,
+        });
+        dispatch({
+          type: AppActions.addHomeCards,
+          payload: {
+            ...appState,
+            homeCards,
+            page: startPage,
+            pages: getPagesSize(pagesMaxSize, pages),
+            isItInitialPage: false,
+          },
+        });
         setIsLoading(false);
       } catch (e) {
         console.error(e);
@@ -38,6 +61,7 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading }: SearchBarPropsI)
     if (value) {
       setSearchValue(value);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

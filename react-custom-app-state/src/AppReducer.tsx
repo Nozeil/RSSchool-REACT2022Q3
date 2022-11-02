@@ -14,6 +14,13 @@ export const appReducer = (state: InitialStateI, action: AppActionType) => {
       return {
         ...state,
         homeCards: payload.homeCards,
+        paginatedHomeCards: payload.paginatedHomeCards,
+        homeCardsSort: payload.homeCardsSort,
+        resultsPerPage: payload.resultsPerPage,
+        page: payload.page,
+        pages: payload.pages,
+        pagesMaxSize: payload.pagesMaxSize,
+        isItInitialPage: payload.isItInitialPage,
       };
     default:
       return state;

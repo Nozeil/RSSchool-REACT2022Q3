@@ -116,3 +116,10 @@ export interface SearchedPhotosI {
     total: number;
   };
 }
+
+export interface photosParamsI {
+  tags: string;
+  sort: string;
+  page: number;
+  perPage: number;
+}
