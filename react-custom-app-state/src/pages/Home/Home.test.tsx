@@ -31,7 +31,7 @@ describe('Home initital view', () => {
     render(<Home />);
     await waitFor(() => {
       expect(retrieveMockGet()).nthCalledWith(1, '', {
-        params: { method: ApiMethods.flickrInterestingnessGetList },
+        params: { method: ApiMethods.flickrInterestingnessGetList, per_page: 500 },
       });
       expect(retrieveMockGet()).nthCalledWith(2, '', {
         params: {
@@ -79,6 +79,9 @@ describe('Home view after user search', () => {
       expect(retrieveMockGet()).toHaveBeenNthCalledWith(3, '', {
         params: {
           method: ApiMethods.flickrPhotosSearch,
+          page: 1,
+          per_page: 10,
+          sort: 'interestingness-desc',
           tags: 'test',
         },
       });

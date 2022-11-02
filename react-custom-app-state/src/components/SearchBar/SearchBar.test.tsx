@@ -4,12 +4,15 @@ import SearchBar from './SearchBar';
 import { mockStorage } from '__mocks__/localStorageMock';
 import userEvent from '@testing-library/user-event';
 
-const [homeState, setSearchValue, setIsLoading] = [
+const [homeState, setSearchValue, setIsLoading, setLastSearch, getPagesSize] = [
   {
     searchValue: 'search',
     data: [],
     isLoading: false,
+    lastSearch: 'lastSearch',
   },
+  jest.fn(),
+  jest.fn(),
   jest.fn(),
   jest.fn(),
 ];
@@ -26,6 +29,8 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
+        setLastSearch={setLastSearch}
+        getPagesSize={getPagesSize}
       />
     );
     const [button, input] = [screen.getByRole('button'), screen.getByPlaceholderText('Search...')];
@@ -42,6 +47,8 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
+        setLastSearch={setLastSearch}
+        getPagesSize={getPagesSize}
       />
     );
     expect(getItemSpy).toHaveBeenCalledTimes(1);
@@ -58,6 +65,8 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
+        setLastSearch={setLastSearch}
+        getPagesSize={getPagesSize}
       />
     );
     const search = getByRole('searchbox');
@@ -72,6 +81,8 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
+        setLastSearch={setLastSearch}
+        getPagesSize={getPagesSize}
       />
     );
     unmount();
