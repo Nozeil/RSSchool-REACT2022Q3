@@ -80,7 +80,11 @@ describe('Form render', () => {
 
 describe('Form validation', () => {
   it('submit button should be enabled after changing value in input ', async () => {
-    const { getByTestId } = render(<Form />);
+    const { getByTestId } = render(
+      <AppProvider>
+        <Form />
+      </AppProvider>
+    );
     const [nameField, submitBtn] = [getByTestId(TestIds.name), getByTestId(TestIds.submit)];
     const user = userEvent.setup();
     await user.type(nameField, '1');
