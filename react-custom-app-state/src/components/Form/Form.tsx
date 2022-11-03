@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormValuesI } from './Form.types';
+import { FieldNamesType, FormValuesI } from './Form.types';
 import cl from './Form.module.css';
 import FormCardList from './FormCardList/FormCardList';
 import FormInput from './FormInput/FormInput';
@@ -11,7 +11,7 @@ import FormSuccessMessage from './FormSuccessMessage/FormSuccessMessage';
 import {
   Countries,
   ErrorMessages,
-  Gendors,
+  Genders,
   InputNames,
   InputTypes,
   LabelTexts,
@@ -19,34 +19,33 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AppActions, TestIds } from 'enums';
 import differenceInYears from 'date-fns/differenceInYears';
-import { FormCardI } from 'App.types';
+import { FormCardI, FormFieldsI } from 'App.types';
 import useAppContext from 'AppContext';
 
 const Form = () => {
   const [message, setMessageVisibility] = useState<boolean>(false);
   const { appState, dispatch } = useAppContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitSuccessful, isDirty },
-    reset,
-  } = useForm<FormValuesI>({
-    defaultValues: {
-      name: '',
-      surname: '',
-      date: '',
-      consent: '',
-      country: Countries.default,
-      gender: '',
-      image: '',
-    },
-  });
+  const { formValues, isDirty, shouldShowErrors } = appState;
+  const { register, handleSubmit, formState, getValues, setValue, getFieldState, reset, trigger } =
+    useForm<FormValuesI>({
+      mode: shouldShowErrors ? 'onChange' : 'onSubmit',
+      defaultValues: {
+        name: '',
+        surname: '',
+        date: '',
+        consent: '',
+        country: Countries.default,
+        gender: '',
+        image: '',
+      },
+    });
+  const { errors, isSubmitSuccessful } = formState;
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
     }
-  }, [isSubmitSuccessful, reset]);
+  }, [isSubmitSuccessful, reset, dispatch]);
 
   const onSubmit: SubmitHandler<FormValuesI> = (data) => {
     const { name, surname, date, country, gender, image: fileList } = data;
@@ -59,13 +58,16 @@ const Form = () => {
             surname,
             date,
             country,
-            gender: gender ? Gendors.female : Gendors.male,
+            gender: gender ? Genders.female : Genders.male,
             file,
           },
           id: Date.now(),
         };
         setMessageVisibility(true);
+
         dispatch({ type: AppActions.addFormCard, payload: { formCard } });
+        dispatch({ type: AppActions.setIsDirty, payload: { isDirty: false } });
+        dispatch({ type: AppActions.setShouldShowErrors, payload: { shouldShowErrors: false } });
       }
     }
   };
@@ -84,6 +86,42 @@ const Form = () => {
   };
 
   const canSubmit = () => isDirty && areErrorsEmpty();
+
+  const fieldNames: FieldNamesType[] = ['name', 'surname', 'date', 'country', 'consent', 'gender'];
+
+  const getFields = () => {
+    const formValues = getValues();
+    const fieldsState = fieldNames.reduce<FormFieldsI>((state, field) => {
+      const { invalid } = getFieldState(field, formState);
+      state[field] = { value: formValues[field], invalid };
+      return state;
+    }, {});
+
+    return fieldsState;
+  };
+
+  const setValues = () => {
+    fieldNames.forEach((name) => {
+      setValue(name, formValues[name].value);
+    });
+  };
+
+  useEffect(
+    () => {
+      setValues();
+      if (shouldShowErrors) {
+        trigger();
+      }
+      return () => {
+        dispatch({
+          type: AppActions.saveFormData,
+          payload: { formValues: getFields() },
+        });
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <>

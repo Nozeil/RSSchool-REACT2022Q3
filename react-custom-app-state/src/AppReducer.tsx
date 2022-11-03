@@ -10,6 +10,12 @@ export const appReducer = (state: InitialStateI, action: AppActionType) => {
         ...state,
         formCards: [...state.formCards, payload.formCard],
       };
+    case AppActions.saveFormData:
+      return { ...state, formValues: { ...payload.formValues } };
+    case AppActions.setIsDirty:
+      return { ...state, isDirty: payload.isDirty };
+    case AppActions.setShouldShowErrors:
+      return { ...state, shouldShowErrors: payload.shouldShowErrors };
     case AppActions.addHomeCards:
       return {
         ...state,

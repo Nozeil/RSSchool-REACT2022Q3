@@ -26,6 +26,7 @@ export type HomeCardsSortType =
 
 export interface InitialStateI {
   formCards: FormCardsData;
+  formValues: FormFieldsI;
   homeCards: PhotosInfoPhotoI[];
   paginatedHomeCards: PhotosInfoPhotoI[][];
   homeCardsSort: string;
@@ -34,6 +35,8 @@ export interface InitialStateI {
   pages: number;
   pagesMaxSize: number;
   isItInitialPage: boolean;
+  isDirty: boolean;
+  shouldShowErrors: boolean;
 }
 
 export interface HomeActionI {
@@ -49,15 +52,46 @@ export interface HomeActionI {
     isItInitialPage: boolean;
   };
 }
-export interface FormActionI {
+
+export interface FormAddCardActionI {
   type: AppActions.addFormCard;
   payload: {
     formCard: FormCardI;
   };
 }
 
-export type AppActionType = HomeActionI | FormActionI;
+export interface FormSaveDataActionI {
+  type: AppActions.saveFormData;
+  payload: {
+    formValues: FormFieldsI;
+  };
+}
+
+export interface FormSetIsDirtyActionI {
+  type: AppActions.setIsDirty;
+  payload: {
+    isDirty: boolean;
+  };
+}
+
+export interface FormSetShouldShowErrors {
+  type: AppActions.setShouldShowErrors;
+  payload: {
+    shouldShowErrors: boolean;
+  };
+}
+
+export type AppActionType =
+  | HomeActionI
+  | FormAddCardActionI
+  | FormSaveDataActionI
+  | FormSetIsDirtyActionI
+  | FormSetShouldShowErrors;
 
 export interface AppProviderArgsI {
   children: React.ReactElement;
+}
+
+export interface FormFieldsI {
+  [k: string]: { value: string | boolean | FileList; invalid: boolean };
 }

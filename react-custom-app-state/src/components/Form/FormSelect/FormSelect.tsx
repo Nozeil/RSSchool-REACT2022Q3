@@ -2,15 +2,18 @@ import React from 'react';
 import { Countries } from '../Form.enums';
 import { FormSelectProps } from './FormSelect.types';
 import { TestIds } from 'enums';
+import useOnChangeHandler from '../useOnChangeHandler';
 
 const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
   ({ cl, errorMessage, name, onChange }, ref) => {
+    const onChangeHandler = useOnChangeHandler<HTMLSelectElement>(onChange);
+
     return (
       <label className={`${cl.columnLabel} ${errorMessage && cl.errorField}`}>
         Country
         <select
           name={name}
-          onChange={onChange}
+          onChange={onChangeHandler}
           ref={ref}
           defaultValue={Countries.default}
           className={cl.field}

@@ -7,7 +7,7 @@ export enum ErrorMessages {
   image = 'choose an image',
 }
 
-export enum Gendors {
+export enum Genders {
   female = 'Female',
   male = 'Male',
 }

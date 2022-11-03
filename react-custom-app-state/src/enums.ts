@@ -29,6 +29,9 @@ export enum TestIds {
 export enum AppActions {
   addFormCard = 'addFormCard',
   addHomeCards = 'addHomeCards',
+  saveFormData = 'saveFormData',
+  setIsDirty = 'setIsDirty',
+  setShouldShowErrors = 'setShouldShowErrors',
 }
 
 export enum SortDropdownValues {

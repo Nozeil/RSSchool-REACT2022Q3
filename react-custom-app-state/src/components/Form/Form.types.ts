@@ -1,5 +1,4 @@
 import { FormCardsData } from 'App.types';
-import { Countries, InputNames } from './Form.enums';
 
 export interface FormStateI {
   data: FormCardsData;
@@ -17,11 +16,20 @@ export interface CurrentSelectI {
 }
 
 export interface FormValuesI {
-  name: InputNames.name | '';
-  surname: InputNames.surname | '';
-  date: InputNames.date | '';
-  country: InputNames.country | Countries.default;
-  consent: InputNames.consent | '';
-  gender: InputNames.gender | '';
+  name: string;
+  surname: string;
+  date: string;
+  country: string;
+  consent: string | boolean;
+  gender: string | boolean;
   image: FileList | '';
 }
+
+export type FieldNamesType =
+  | 'name'
+  | 'surname'
+  | 'date'
+  | 'country'
+  | 'consent'
+  | 'gender'
+  | 'image';

@@ -1,10 +1,21 @@
-import { AppProviderArgsI, AppActionType, InitialStateI } from 'App.types';
+import { AppProviderArgsI, AppActionType, InitialStateI, FormFieldsI } from 'App.types';
 import { appReducer } from 'AppReducer';
+import { Countries } from 'components/Form/Form.enums';
 import { ResultsPerPageDropdownValues, SortDropdownValues, TotalPagesDropdownValues } from 'enums';
 import React, { createContext, useContext, useReducer } from 'react';
 
+const defaultFormValues: FormFieldsI = {
+  name: { value: '', invalid: false },
+  surname: { value: '', invalid: false },
+  date: { value: '', invalid: false },
+  country: { value: Countries.default, invalid: false },
+  consent: { value: '', invalid: false },
+  gender: { value: '', invalid: false },
+};
+
 const initialState: InitialStateI = {
   formCards: [],
+  formValues: defaultFormValues,
   homeCards: [],
   paginatedHomeCards: [],
   homeCardsSort: SortDropdownValues.viewsDesc,
@@ -13,6 +24,8 @@ const initialState: InitialStateI = {
   pages: 1,
   pagesMaxSize: TotalPagesDropdownValues.fifty,
   isItInitialPage: true,
+  isDirty: false,
+  shouldShowErrors: false,
 };
 
 const AppContext = createContext<{
