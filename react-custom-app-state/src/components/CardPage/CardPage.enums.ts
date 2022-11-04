@@ -1,4 +1,4 @@
-export enum defualtModalValues {
+export enum defualtCardPageValues {
   description = 'no description',
   tags = 'no tags',
 }

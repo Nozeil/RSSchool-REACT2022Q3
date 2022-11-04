@@ -26,6 +26,14 @@ const initialState: InitialStateI = {
   isItInitialPage: true,
   isDirty: false,
   shouldShowErrors: false,
+  cardPageData: {
+    description: '',
+    tags: [],
+    src: '',
+    title: '',
+    subtitle: '',
+    id: '',
+  },
 };
 
 const AppContext = createContext<{

@@ -1,4 +1,4 @@
-import { PhotosInfoPhotoI } from 'api/api.interfaces';
+import { PhotosInfoPhotoI, TagI } from 'api/api.interfaces';
 import { AppActions, SortDropdownValues } from 'enums';
 import React from 'react';
 
@@ -24,6 +24,14 @@ export type HomeCardsSortType =
   | SortDropdownValues.viewsAsc
   | SortDropdownValues.viewsDesc;
 
+export interface CardPageDataI {
+  description: string;
+  tags: TagI[];
+  src: string;
+  title: string;
+  subtitle: string;
+  id: string;
+}
 export interface InitialStateI {
   formCards: FormCardsData;
   formValues: FormFieldsI;
@@ -37,6 +45,7 @@ export interface InitialStateI {
   isItInitialPage: boolean;
   isDirty: boolean;
   shouldShowErrors: boolean;
+  cardPageData: CardPageDataI;
 }
 
 export interface HomeActionI {
@@ -81,12 +90,20 @@ export interface FormSetShouldShowErrors {
   };
 }
 
+export interface SetCardPageDataActionI {
+  type: AppActions.setCardPageData;
+  payload: {
+    cardPageData: CardPageDataI;
+  };
+}
+
 export type AppActionType =
   | HomeActionI
   | FormAddCardActionI
   | FormSaveDataActionI
   | FormSetIsDirtyActionI
-  | FormSetShouldShowErrors;
+  | FormSetShouldShowErrors
+  | SetCardPageDataActionI;
 
 export interface AppProviderArgsI {
   children: React.ReactElement;

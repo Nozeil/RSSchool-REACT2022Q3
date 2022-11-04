@@ -28,6 +28,9 @@ export const appReducer = (state: InitialStateI, action: AppActionType) => {
         pagesMaxSize: payload.pagesMaxSize,
         isItInitialPage: payload.isItInitialPage,
       };
+    case AppActions.setCardPageData: {
+      return { ...state, cardPageData: payload.cardPageData };
+    }
     default:
       return state;
   }

@@ -1,3 +1,4 @@
+import useAppContext from 'AppContext';
 import { TestIds } from 'enums';
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
@@ -5,7 +6,11 @@ import cl from './Layout.module.css';
 
 const Layout = () => {
   const setActive = ({ isActive }: { isActive: boolean }): string =>
-    isActive ? `${cl['active-link']} ${cl['nav-link']} link` : `${cl['nav-link']} link`;
+    isActive ? `${cl.active} ${cl.link}` : `${cl.link}`;
+  const setCardPageActive = ({ isActive }: { isActive: boolean }): string =>
+    isActive ? `${cl.active} ${cl.link}` : `${cl.link} ${cl.hidden}`;
+  const { id, title } = useAppContext().appState.cardPageData;
+  const cardPagePath = `cardPage/${id || '*'}`;
 
   return (
     <>
@@ -22,6 +27,9 @@ const Layout = () => {
           </NavLink>
           <NavLink to="forms" className={setActive} data-testid={TestIds.forms}>
             Forms
+          </NavLink>
+          <NavLink to={cardPagePath} className={setCardPageActive}>
+            {title}
           </NavLink>
         </nav>
       </header>

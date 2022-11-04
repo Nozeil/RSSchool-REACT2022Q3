@@ -26,6 +26,7 @@ const Home = () => {
     resultsPerPage,
     paginatedHomeCards,
     pagesMaxSize,
+    homeCards,
   } = appState;
 
   const getSortedInterestingnessData = (homeCards: PhotosInfoPhotoI[], sortValue: string) => {
@@ -73,19 +74,22 @@ const Home = () => {
   const load = async () => {
     try {
       setIsLoading(true);
-      const { data: homeCards } = await API.getData();
-      const cards = getSortedInterestingnessData(homeCards, homeCardsSort);
-      const paginatedCards = getPaginatedInterestingnessData(cards, resultsPerPage);
 
-      dispatch({
-        type: AppActions.addHomeCards,
-        payload: {
-          ...appState,
-          homeCards: paginatedCards[currPage - 1],
-          paginatedHomeCards: paginatedCards,
-          pages: getPagesSize(pagesMaxSize, paginatedCards.length),
-        },
-      });
+      if (!homeCards.length) {
+        const { data: homeCards } = await API.getData();
+        const cards = getSortedInterestingnessData(homeCards, homeCardsSort);
+        const paginatedCards = getPaginatedInterestingnessData(cards, resultsPerPage);
+
+        dispatch({
+          type: AppActions.addHomeCards,
+          payload: {
+            ...appState,
+            homeCards: paginatedCards[currPage - 1],
+            paginatedHomeCards: paginatedCards,
+            pages: getPagesSize(pagesMaxSize, paginatedCards.length),
+          },
+        });
+      }
 
       setIsLoading(false);
     } catch (e) {

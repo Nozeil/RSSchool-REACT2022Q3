@@ -1,0 +1,37 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+}
+
+.img {
+  max-width: 80vw;
+  max-height: 80vh;
+  align-self: center;
+  object-fit: contain;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag, .link {
+  border-radius: 5px;
+  box-shadow: 0 0 3px var(--shadow-color);
+  padding: 5px;
+  margin: 5px;
+}
+
+.link {
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--light-s-color);
+}

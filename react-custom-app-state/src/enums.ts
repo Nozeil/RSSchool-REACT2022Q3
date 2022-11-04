@@ -21,8 +21,8 @@ export enum TestIds {
   forms = 'forms',
   spinner = 'spinner',
   overlay = 'overlay',
-  modal = 'modal',
-  modalImg = 'modal-img',
+  cardPage = 'cardPage',
+  cardPageImg = 'cardPageImg',
   closeBtn = 'close-button',
 }
 
@@ -32,6 +32,7 @@ export enum AppActions {
   saveFormData = 'saveFormData',
   setIsDirty = 'setIsDirty',
   setShouldShowErrors = 'setShouldShowErrors',
+  setCardPageData = 'setCardPage',
 }
 
 export enum SortDropdownValues {

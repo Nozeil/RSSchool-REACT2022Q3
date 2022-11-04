@@ -1,33 +1,44 @@
-import { TestIds } from 'enums';
+import useAppContext from 'AppContext';
+import { AppActions, TestIds } from 'enums';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CardPropsI } from './Card.interfaces';
 import cl from './Card.module.css';
 
-const Card = ({ saveCardListData, cardData, setIsModalVisible }: CardPropsI) => {
+const Card = ({ cardData }: CardPropsI) => {
+  const { dispatch } = useAppContext();
   const { title, secret, server, id, owner, description, tags } = cardData;
   const newTitle = title._content ? title._content : 'Photo';
-  const src = `https://live.staticflickr.com/${server}/${id}_${secret}_c.jpg`;
+  const src = `https://live.staticflickr.com/${server}/${id}_${secret}_b.jpg`;
 
   const onClick = () => {
-    saveCardListData({
-      modalDescription: description._content,
-      modalTags: tags.tag,
-      modalSrc: src,
-      modalTitle: newTitle,
-      modalSubtitle: owner.username,
-    });
-    setIsModalVisible(true);
+    const cardPageData = {
+      id,
+      description: description._content,
+      tags: tags.tag,
+      src: src,
+      title: newTitle,
+      subtitle: owner.username,
+    };
+
+    dispatch({ type: AppActions.setCardPageData, payload: { cardPageData: cardPageData } });
   };
 
   return (
-    <div data-testid={TestIds.card} className={cl.card} onClick={onClick}>
+    <Link
+      to={`cardPage/${id}`}
+      relative="path"
+      data-testid={TestIds.card}
+      className={cl.card}
+      onClick={onClick}
+    >
       <div className={cl.cardShortInfo}>
         <h3 className={cl.cardTitle}>{newTitle}</h3>
         <h3 className={cl.cardSubtitle}>by {owner.username}</h3>
       </div>
 
       <img data-testid={TestIds.cardImg} className={cl.cardImage} src={src} alt="photo" />
-    </div>
+    </Link>
   );
 };
 
