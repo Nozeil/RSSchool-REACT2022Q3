@@ -37,6 +37,7 @@ export interface InitialStateI {
   formValues: FormFieldsI;
   homeCards: PhotosInfoPhotoI[];
   paginatedHomeCards: PhotosInfoPhotoI[][];
+  lastSearch: string;
   homeCardsSort: string;
   resultsPerPage: number;
   page: number;
@@ -48,7 +49,7 @@ export interface InitialStateI {
   cardPageData: CardPageDataI;
 }
 
-export interface HomeActionI {
+interface HomeActionI {
   type: AppActions.addHomeCards;
   payload: {
     homeCards: PhotosInfoPhotoI[];
@@ -62,38 +63,45 @@ export interface HomeActionI {
   };
 }
 
-export interface FormAddCardActionI {
+interface FormAddCardActionI {
   type: AppActions.addFormCard;
   payload: {
     formCard: FormCardI;
   };
 }
 
-export interface FormSaveDataActionI {
+interface FormSaveDataActionI {
   type: AppActions.saveFormData;
   payload: {
     formValues: FormFieldsI;
   };
 }
 
-export interface FormSetIsDirtyActionI {
+interface FormSetIsDirtyActionI {
   type: AppActions.setIsDirty;
   payload: {
     isDirty: boolean;
   };
 }
 
-export interface FormSetShouldShowErrors {
+interface FormSetShouldShowErrors {
   type: AppActions.setShouldShowErrors;
   payload: {
     shouldShowErrors: boolean;
   };
 }
 
-export interface SetCardPageDataActionI {
+interface SetCardPageDataActionI {
   type: AppActions.setCardPageData;
   payload: {
     cardPageData: CardPageDataI;
+  };
+}
+
+interface SetSearchValueActionI {
+  type: AppActions.setLastSearch;
+  payload: {
+    lastSearch: string;
   };
 }
 
@@ -103,7 +111,8 @@ export type AppActionType =
   | FormSaveDataActionI
   | FormSetIsDirtyActionI
   | FormSetShouldShowErrors
-  | SetCardPageDataActionI;
+  | SetCardPageDataActionI
+  | SetSearchValueActionI;
 
 export interface AppProviderArgsI {
   children: React.ReactElement;

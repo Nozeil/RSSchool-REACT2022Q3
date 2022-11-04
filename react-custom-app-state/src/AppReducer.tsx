@@ -31,6 +31,9 @@ export const appReducer = (state: InitialStateI, action: AppActionType) => {
     case AppActions.setCardPageData: {
       return { ...state, cardPageData: payload.cardPageData };
     }
+    case AppActions.setLastSearch: {
+      return { ...state, lastSearch: payload.lastSearch };
+    }
     default:
       return state;
   }

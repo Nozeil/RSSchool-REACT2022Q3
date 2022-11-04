@@ -7,9 +7,14 @@ import cl from './../../pages/Home/Home.module.css';
 
 const TotalPagesDropdown = ({ homeState, setIsLoading, getPagesSize }: HomeControlI) => {
   const { appState, dispatch } = useAppContext();
-  const { isItInitialPage, paginatedHomeCards, resultsPerPage, homeCardsSort, pagesMaxSize } =
-    appState;
-  const { lastSearch } = homeState;
+  const {
+    isItInitialPage,
+    paginatedHomeCards,
+    resultsPerPage,
+    homeCardsSort,
+    pagesMaxSize,
+    lastSearch,
+  } = appState;
   const startPage = 1;
 
   const onChange = async (e: ChangeEvent<HTMLSelectElement>) => {

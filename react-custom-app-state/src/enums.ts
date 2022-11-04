@@ -33,6 +33,7 @@ export enum AppActions {
   setIsDirty = 'setIsDirty',
   setShouldShowErrors = 'setShouldShowErrors',
   setCardPageData = 'setCardPage',
+  setLastSearch = 'setLastSearch',
 }
 
 export enum SortDropdownValues {

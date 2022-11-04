@@ -12,8 +12,7 @@ const SortDropdown = ({
   getPaginatedInterestingnessData,
 }: HomeControlI) => {
   const { appState, dispatch } = useAppContext();
-  const { paginatedHomeCards, resultsPerPage, page, isItInitialPage } = appState;
-  const { lastSearch } = homeState;
+  const { paginatedHomeCards, resultsPerPage, page, isItInitialPage, lastSearch } = appState;
 
   const onChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const sort = e.target.value;

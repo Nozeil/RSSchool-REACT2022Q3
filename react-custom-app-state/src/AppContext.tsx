@@ -18,6 +18,7 @@ const initialState: InitialStateI = {
   formValues: defaultFormValues,
   homeCards: [],
   paginatedHomeCards: [],
+  lastSearch: '',
   homeCardsSort: SortDropdownValues.viewsDesc,
   resultsPerPage: ResultsPerPageDropdownValues.ten,
   page: 1,

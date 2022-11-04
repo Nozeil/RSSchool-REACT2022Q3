@@ -5,13 +5,7 @@ import API from './../../api/api';
 import useAppContext from 'AppContext';
 import { AppActions } from 'enums';
 
-const SearchBar = ({
-  homeState,
-  setSearchValue,
-  setLastSearch,
-  setIsLoading,
-  getPagesSize,
-}: SearchBarPropsI) => {
+const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: SearchBarPropsI) => {
   const startPage = 1;
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
@@ -31,7 +25,7 @@ const SearchBar = ({
     if (e.code === 'Enter' && tags) {
       try {
         e.currentTarget.blur();
-        setLastSearch(tags);
+        dispatch({ type: AppActions.setLastSearch, payload: { lastSearch: tags } });
         setIsLoading(true);
         const { data: homeCards, pages } = await API.getData({
           tags,

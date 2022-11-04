@@ -12,8 +12,7 @@ const ResultsPerPageDropdown = ({
   getPagesSize,
 }: HomeControlI) => {
   const { appState, dispatch } = useAppContext();
-  const { isItInitialPage, homeCardsSort, paginatedHomeCards, pagesMaxSize } = appState;
-  const { lastSearch } = homeState;
+  const { isItInitialPage, homeCardsSort, paginatedHomeCards, pagesMaxSize, lastSearch } = appState;
   const startPage = 1;
 
   const onChange = async (e: ChangeEvent<HTMLSelectElement>) => {

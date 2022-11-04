@@ -15,7 +15,6 @@ import TotalPagesDropdown from 'components/TotalPagesDropdown/TotalPagesDropdown
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const [lastSearch, setLastSearch] = useState<string>('');
   const { appState, dispatch } = useAppContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const {
@@ -27,6 +26,7 @@ const Home = () => {
     paginatedHomeCards,
     pagesMaxSize,
     homeCards,
+    lastSearch,
   } = appState;
 
   const getSortedInterestingnessData = (homeCards: PhotosInfoPhotoI[], sortValue: string) => {
@@ -103,7 +103,7 @@ const Home = () => {
   }, []);
 
   const content = isLoading ? <LoadingSpinner /> : <CardList />;
-  const homeState: HomeStateI = { searchValue, lastSearch, isLoading };
+  const homeState: HomeStateI = { searchValue, isLoading };
 
   const onChange = async (e: ChangeEvent<unknown>, page: number) => {
     if (page !== currPage) {
@@ -147,7 +147,6 @@ const Home = () => {
         <SearchBar
           homeState={homeState}
           setSearchValue={setSearchValue}
-          setLastSearch={setLastSearch}
           setIsLoading={setIsLoading}
           getPagesSize={getPagesSize}
         />
