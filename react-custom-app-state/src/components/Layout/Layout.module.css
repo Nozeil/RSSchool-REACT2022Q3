@@ -3,7 +3,11 @@
   align-items: center;
   height: 60px;
   background-color: var(--dark-s-color);
-  margin-bottom: 20px !important;
+  margin-bottom: 20px;
+}
+
+.nav {
+  align-self: flex-start;
 }
 
 .link {

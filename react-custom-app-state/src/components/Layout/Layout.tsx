@@ -14,24 +14,26 @@ const Layout = () => {
 
   return (
     <>
-      <header className={`${cl.header} container`}>
-        <nav className={cl.nav}>
-          <NavLink end to="/" className={setActive} data-testid={TestIds.home}>
-            Home
-          </NavLink>
-          <NavLink to="about" className={setActive} data-testid={TestIds.about}>
-            About
-          </NavLink>
-          <NavLink to="404" className={setActive} data-testid={TestIds.errorPage}>
-            404
-          </NavLink>
-          <NavLink to="forms" className={setActive} data-testid={TestIds.forms}>
-            Forms
-          </NavLink>
-          <NavLink to={cardPagePath} className={setCardPageActive}>
-            {title}
-          </NavLink>
-        </nav>
+      <header className={cl.header}>
+        <div className="container">
+          <nav className={cl.nav}>
+            <NavLink end to="/" className={setActive} data-testid={TestIds.home}>
+              Home
+            </NavLink>
+            <NavLink to="about" className={setActive} data-testid={TestIds.about}>
+              About
+            </NavLink>
+            <NavLink to="404" className={setActive} data-testid={TestIds.errorPage}>
+              404
+            </NavLink>
+            <NavLink to="forms" className={setActive} data-testid={TestIds.forms}>
+              Forms
+            </NavLink>
+            <NavLink to={cardPagePath} className={setCardPageActive}>
+              {title}
+            </NavLink>
+          </nav>
+        </div>
       </header>
       <main className="container">
         <Outlet />
