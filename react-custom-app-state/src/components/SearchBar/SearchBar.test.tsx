@@ -4,14 +4,13 @@ import SearchBar from './SearchBar';
 import { mockStorage } from '__mocks__/localStorageMock';
 import userEvent from '@testing-library/user-event';
 
-const [homeState, setSearchValue, setIsLoading, setLastSearch, getPagesSize] = [
+const [homeState, setSearchValue, setIsLoading, getPagesSize] = [
   {
     searchValue: 'search',
     data: [],
     isLoading: false,
     lastSearch: 'lastSearch',
   },
-  jest.fn(),
   jest.fn(),
   jest.fn(),
   jest.fn(),
@@ -29,7 +28,6 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
-        setLastSearch={setLastSearch}
         getPagesSize={getPagesSize}
       />
     );
@@ -47,7 +45,6 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
-        setLastSearch={setLastSearch}
         getPagesSize={getPagesSize}
       />
     );
@@ -65,7 +62,6 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
-        setLastSearch={setLastSearch}
         getPagesSize={getPagesSize}
       />
     );
@@ -81,7 +77,6 @@ describe('Local storage', () => {
         homeState={homeState}
         setIsLoading={setIsLoading}
         setSearchValue={setSearchValue}
-        setLastSearch={setLastSearch}
         getPagesSize={getPagesSize}
       />
     );
