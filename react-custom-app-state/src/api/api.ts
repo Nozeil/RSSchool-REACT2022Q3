@@ -45,7 +45,6 @@ const API = {
     const data = photosParams
       ? await this.getPhotos(photosParams)
       : await this.getInterestingness();
-    console.log(data.photos);
     const photosInfo = data.photos.photo.map(async (photo) => (await this.getInfo(photo.id)).photo);
     return { data: await Promise.all(photosInfo), pages: data.photos.pages };
   },

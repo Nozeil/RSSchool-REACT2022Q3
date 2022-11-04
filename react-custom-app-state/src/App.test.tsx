@@ -1,17 +1,9 @@
 import React from 'react';
 import App from 'App';
-import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { TestIds } from 'enums';
 import initAxiosGetMethodMock from '__mocks__/initAxiosGetMethodMock';
-
-const renderWithRouter = (component: React.ReactElement, { route = '/' } = {}) => {
-  window.history.pushState({}, 'Test page', route);
-
-  return {
-    ...render(component, { wrapper: BrowserRouter }),
-  };
-};
+import renderWithRouter from 'renderWithRouter';
 
 initAxiosGetMethodMock();
 

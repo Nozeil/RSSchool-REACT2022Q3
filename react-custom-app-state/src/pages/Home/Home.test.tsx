@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { TestIds } from 'enums';
 import { AppProvider } from 'AppContext';
 import initAxiosGetMethodMock from '__mocks__/initAxiosGetMethodMock';
+import renderWithRouter from 'renderWithRouter';
 
 const { interestingness, photosInfo, searchedPhotos } = mockData;
 
@@ -42,7 +43,7 @@ describe('Home initital view', () => {
     });
   });
   it('should show 1 card with mock data', async () => {
-    render(
+    renderWithRouter(
       <AppProvider>
         <Home />
       </AppProvider>
@@ -62,7 +63,7 @@ const searchPhoto = async () => {
 
 describe('Home view after user search', () => {
   it('should call axios get 4 times', async () => {
-    render(
+    renderWithRouter(
       <AppProvider>
         <Home />
       </AppProvider>
@@ -94,67 +95,12 @@ describe('Home view after user search', () => {
     });
   });
   it('should search and show searched data after pressing enter button', async () => {
-    render(
+    renderWithRouter(
       <AppProvider>
         <Home />
       </AppProvider>
     );
     await searchPhoto();
     await waitFor(() => checkCreatedCards(screen.getAllByTestId(TestIds.card)));
-  });
-});
-
-const showModal = async () => {
-  await searchPhoto();
-  const card = await screen.findByTestId(TestIds.card);
-  const user = userEvent.setup();
-  await user.click(card);
-};
-
-const closeModal = async (closeMatcher: string) => {
-  await showModal();
-  const modal = screen.getByTestId(TestIds.modal);
-  const user = userEvent.setup();
-  await user.click(screen.getByTestId(closeMatcher));
-  return modal;
-};
-
-describe('Modal', () => {
-  it('should show modal after click on card', async () => {
-    render(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
-    await showModal();
-    const { getByTestId } = screen;
-    const modal = getByTestId(TestIds.modal);
-    expect(modal).toBeInTheDocument();
-    expect(getByTestId(TestIds.overlay)).toBeInTheDocument();
-    expect(getByTestId(TestIds.modalImg)).toBeInTheDocument();
-    const { description, owner, tags, title } = photosInfo.photo;
-    expect(modal).toContainHTML(description._content);
-    expect(modal).toContainHTML(owner.username);
-    expect(modal).toContainHTML(tags.tag[0]._content);
-    expect(modal).toContainHTML(title._content);
-  });
-
-  it('should close modal after click on overlay', async () => {
-    render(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
-    const modal = await closeModal('overlay');
-    expect(modal).not.toBeInTheDocument();
-  });
-  it('should close modal after click on overlay', async () => {
-    render(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
-    const modal = await closeModal('close-button');
-    expect(modal).not.toBeInTheDocument();
   });
 });
