@@ -19,8 +19,8 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AppActions, TestIds } from 'enums';
 import differenceInYears from 'date-fns/differenceInYears';
-import { FormCardI, FormFieldsI } from 'App.types';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
+import { FormCardI, FormFieldsI } from 'app/App.types';
 
 const Form = () => {
   const [message, setMessageVisibility] = useState<boolean>(false);

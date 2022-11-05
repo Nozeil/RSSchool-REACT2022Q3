@@ -3,7 +3,7 @@ import React from 'react';
 import { defualtCardPageValues } from './CardPage.enums';
 import cl from './CardPage.module.css';
 import dompurify from 'dompurify';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { Link } from 'react-router-dom';
 
 const CardPage = () => {

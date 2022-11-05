@@ -2,7 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
 import API from './../../api/api';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { AppActions } from 'enums';
 
 const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: SearchBarPropsI) => {

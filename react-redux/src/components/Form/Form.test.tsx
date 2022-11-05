@@ -4,7 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Countries, ErrorMessages } from './Form.enums';
 import { TestIds } from 'enums';
-import { AppProvider } from 'AppContext';
+import { AppProvider } from 'app/AppContext';
 const checkElement = (id: string) => expect(render(<Form />).getByTestId(id)).toBeInTheDocument();
 
 const submitChangedValue = async (elem: HTMLElement, btn: HTMLElement, value: string) => {

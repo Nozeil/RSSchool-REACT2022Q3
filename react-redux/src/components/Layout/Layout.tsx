@@ -1,4 +1,4 @@
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { TestIds } from 'enums';
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';

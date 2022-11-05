@@ -1,4 +1,4 @@
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { AppActions, TestIds } from 'enums';
 import React from 'react';
 import { Link } from 'react-router-dom';

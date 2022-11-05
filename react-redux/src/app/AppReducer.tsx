@@ -1,4 +1,4 @@
-import { AppActionType, InitialStateI } from 'App.types';
+import { AppActionType, InitialStateI } from './App.types';
 import { AppActions } from 'enums';
 
 export const appReducer = (state: InitialStateI, action: AppActionType) => {

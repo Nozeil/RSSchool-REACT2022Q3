@@ -3,7 +3,7 @@ import SearchBar from 'components/SearchBar/SearchBar';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import API from './../../api/api';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { AppActions, SortDropdownValues } from 'enums';
 import cl from './Home.module.css';
 import { HomeStateI } from './Home.interfaces';

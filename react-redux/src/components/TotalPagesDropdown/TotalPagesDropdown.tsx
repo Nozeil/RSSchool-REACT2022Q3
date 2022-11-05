@@ -1,5 +1,5 @@
 import API from 'api/api';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { AppActions, TotalPagesDropdownValues } from 'enums';
 import { HomeControlI } from 'pages/Home/Home.interfaces';
 import React, { ChangeEvent } from 'react';

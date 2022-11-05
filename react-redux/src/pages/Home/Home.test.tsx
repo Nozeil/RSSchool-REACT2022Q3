@@ -5,9 +5,9 @@ import { ApiMethods } from 'api/api.enums';
 import { mockData } from '__mocks__/flickrMockData';
 import userEvent from '@testing-library/user-event';
 import { TestIds } from 'enums';
-import { AppProvider } from 'AppContext';
 import initAxiosGetMethodMock from '__mocks__/initAxiosGetMethodMock';
 import renderWithRouter from 'renderWithRouter';
+import { AppProvider } from 'app/AppContext';
 
 const { interestingness, photosInfo, searchedPhotos } = mockData;
 

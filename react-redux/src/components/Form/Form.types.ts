@@ -1,4 +1,4 @@
-import { FormCardsData } from 'App.types';
+import { FormCardsData } from 'app/App.types';
 
 export interface FormStateI {
   data: FormCardsData;

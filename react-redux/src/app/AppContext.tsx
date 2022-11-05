@@ -1,5 +1,5 @@
-import { AppProviderArgsI, AppActionType, InitialStateI, FormFieldsI } from 'App.types';
-import { appReducer } from 'AppReducer';
+import { AppProviderArgsI, AppActionType, InitialStateI, FormFieldsI } from './App.types';
+import { appReducer } from './AppReducer';
 import { Countries } from 'components/Form/Form.enums';
 import { ResultsPerPageDropdownValues, SortDropdownValues, TotalPagesDropdownValues } from 'enums';
 import React, { createContext, useContext, useReducer } from 'react';

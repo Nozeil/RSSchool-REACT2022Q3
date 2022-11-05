@@ -1,5 +1,5 @@
 import React from 'react';
-import App from 'App';
+import App from './App';
 import { fireEvent, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { TestIds } from 'enums';
 import initAxiosGetMethodMock from '__mocks__/initAxiosGetMethodMock';

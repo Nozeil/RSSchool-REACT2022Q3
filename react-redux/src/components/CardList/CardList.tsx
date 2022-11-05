@@ -2,7 +2,7 @@ import Card from 'components/Card/Card';
 import React from 'react';
 import cl from './CardList.module.css';
 import { TestIds } from 'enums';
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 
 const CardList = () => {
   const { appState } = useAppContext();

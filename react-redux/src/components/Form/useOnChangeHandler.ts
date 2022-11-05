@@ -1,4 +1,4 @@
-import useAppContext from 'AppContext';
+import useAppContext from 'app/AppContext';
 import { AppActions } from 'enums';
 import { ChangeEvent } from 'react';
 
