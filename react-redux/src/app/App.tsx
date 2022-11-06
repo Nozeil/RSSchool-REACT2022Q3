@@ -1,4 +1,3 @@
-import useAppContext from './AppContext';
 import Form from 'components/Form/Form';
 import Layout from 'components/Layout/Layout';
 import CardPage from 'components/CardPage/CardPage';
@@ -7,11 +6,13 @@ import Home from 'pages/Home/Home';
 import NotFound from 'pages/NotFound';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/types';
 
 const App = () => {
-  const { appState } = useAppContext();
-  const cardPagePath = `cardPage/${appState.cardPageData.id || '*'}`;
-  const cardPageElement = appState.cardPageData.id ? <CardPage /> : <Navigate to="/" replace />;
+  const id = useSelector((state: RootState) => state.cardPageData.id);
+  const cardPagePath = `cardPage/${id || '*'}`;
+  const cardPageElement = id ? <CardPage /> : <Navigate to="/" replace />;
 
   return (
     <Routes>

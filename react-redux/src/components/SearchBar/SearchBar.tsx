@@ -2,15 +2,16 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
 import API from './../../api/api';
-import useAppContext from 'app/AppContext';
-import { AppActions } from 'enums';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'redux/types';
+import { setLastSearch, updateHomePageDataAfterSearch } from 'redux/appSlice';
 
 const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: SearchBarPropsI) => {
   const startPage = 1;
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
-  const { appState, dispatch } = useAppContext();
-  const { homeCardsSort, resultsPerPage, pagesMaxSize } = appState;
+  const dispatch = useDispatch();
+  const { homeCardsSort, resultsPerPage, pagesMaxSize } = useSelector((state: RootState) => state);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -25,7 +26,7 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: Se
     if (e.code === 'Enter' && tags) {
       try {
         e.currentTarget.blur();
-        dispatch({ type: AppActions.setLastSearch, payload: { lastSearch: tags } });
+        dispatch(setLastSearch({ lastSearch: tags }));
         setIsLoading(true);
         const { data: homeCards, pages } = await API.getData({
           tags,
@@ -33,16 +34,14 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: Se
           page: startPage,
           perPage: resultsPerPage,
         });
-        dispatch({
-          type: AppActions.addHomeCards,
-          payload: {
-            ...appState,
+        dispatch(
+          updateHomePageDataAfterSearch({
             homeCards,
             page: startPage,
             pages: getPagesSize(pagesMaxSize, pages),
             isItInitialPage: false,
-          },
-        });
+          })
+        );
         setIsLoading(false);
       } catch (e) {
         console.error(e);

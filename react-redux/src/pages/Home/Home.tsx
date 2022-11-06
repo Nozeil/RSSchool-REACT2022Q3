@@ -3,8 +3,7 @@ import SearchBar from 'components/SearchBar/SearchBar';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import API from './../../api/api';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
-import useAppContext from 'app/AppContext';
-import { AppActions, SortDropdownValues } from 'enums';
+import { SortDropdownValues } from 'enums';
 import cl from './Home.module.css';
 import { HomeStateI } from './Home.interfaces';
 import ResultsPerPageDropdown from 'components/ResultsPerPageDropdown/ResultsPerPageDropdown';
@@ -12,11 +11,12 @@ import SortDropdown from 'components/SortDropdown/SortDropdown';
 import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import { Pagination } from '@mui/material';
 import TotalPagesDropdown from 'components/TotalPagesDropdown/TotalPagesDropdown';
+import { RootState } from 'redux/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateHomePageDataAfterLoad, updateHomePageDataAfterPagination } from 'redux/appSlice';
 
 const Home = () => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const { appState, dispatch } = useAppContext();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
   const {
     isItInitialPage,
     homeCardsSort,
@@ -27,7 +27,10 @@ const Home = () => {
     pagesMaxSize,
     homeCards,
     lastSearch,
-  } = appState;
+  } = useSelector((state: RootState) => state);
+
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getSortedInterestingnessData = (homeCards: PhotosInfoPhotoI[], sortValue: string) => {
     let cards: PhotosInfoPhotoI[] = [];
@@ -80,15 +83,13 @@ const Home = () => {
         const cards = getSortedInterestingnessData(homeCards, homeCardsSort);
         const paginatedCards = getPaginatedInterestingnessData(cards, resultsPerPage);
 
-        dispatch({
-          type: AppActions.addHomeCards,
-          payload: {
-            ...appState,
+        dispatch(
+          updateHomePageDataAfterLoad({
             homeCards: paginatedCards[currPage - 1],
             paginatedHomeCards: paginatedCards,
             pages: getPagesSize(pagesMaxSize, paginatedCards.length),
-          },
-        });
+          })
+        );
       }
 
       setIsLoading(false);
@@ -108,14 +109,12 @@ const Home = () => {
   const onChange = async (e: ChangeEvent<unknown>, page: number) => {
     if (page !== currPage) {
       if (isItInitialPage) {
-        dispatch({
-          type: AppActions.addHomeCards,
-          payload: {
-            ...appState,
+        dispatch(
+          updateHomePageDataAfterPagination({
             homeCards: paginatedHomeCards[page - 1],
             page,
-          },
-        });
+          })
+        );
       } else {
         try {
           setIsLoading(true);
@@ -125,14 +124,12 @@ const Home = () => {
             page,
             perPage: resultsPerPage,
           });
-          dispatch({
-            type: AppActions.addHomeCards,
-            payload: {
-              ...appState,
+          dispatch(
+            updateHomePageDataAfterPagination({
               homeCards,
               page,
-            },
-          });
+            })
+          );
           setIsLoading(false);
         } catch (e) {
           console.error(e);

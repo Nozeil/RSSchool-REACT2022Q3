@@ -1,15 +1,16 @@
 import React from 'react';
 import { InputTypes } from '../Form.enums';
 import { FormSubmitPropsI } from './FormSubmit.interfaces';
-import { AppActions, TestIds } from 'enums';
-import useAppContext from 'app/AppContext';
+import { TestIds } from 'enums';
+import { useDispatch } from 'react-redux';
+import { setShouldShowErrors } from 'redux/appSlice';
 
 const FormSubmit = ({ cl, canSubmit }: FormSubmitPropsI) => {
   const sumbitClass = `${cl.button} ${canSubmit ? '' : cl.disabled}`;
-  const { dispatch } = useAppContext();
+  const dispatch = useDispatch();
 
   const onClick = () => {
-    dispatch({ type: AppActions.setShouldShowErrors, payload: { shouldShowErrors: true } });
+    dispatch(setShouldShowErrors({ shouldShowErrors: true }));
   };
 
   return (

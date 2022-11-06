@@ -26,16 +26,6 @@ export enum TestIds {
   closeBtn = 'close-button',
 }
 
-export enum AppActions {
-  addFormCard = 'addFormCard',
-  addHomeCards = 'addHomeCards',
-  saveFormData = 'saveFormData',
-  setIsDirty = 'setIsDirty',
-  setShouldShowErrors = 'setShouldShowErrors',
-  setCardPageData = 'setCardPage',
-  setLastSearch = 'setLastSearch',
-}
-
 export enum SortDropdownValues {
   viewsDesc = 'interestingness-desc',
   viewsAsc = 'interestingness-asc',

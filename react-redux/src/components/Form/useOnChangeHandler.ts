@@ -1,12 +1,12 @@
-import useAppContext from 'app/AppContext';
-import { AppActions } from 'enums';
 import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setIsDirty } from 'redux/appSlice';
 
 const useOnChangeHandler = <T>(onChange: (e: ChangeEvent<T>) => Promise<boolean | void>) => {
-  const { dispatch } = useAppContext();
+  const dispatch = useDispatch();
 
   return (e: ChangeEvent<T>) => {
-    dispatch({ type: AppActions.setIsDirty, payload: { isDirty: true } });
+    dispatch(setIsDirty({ isDirty: true }));
     onChange(e);
   };
 };

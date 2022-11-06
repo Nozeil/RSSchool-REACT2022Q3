@@ -8,7 +8,7 @@ const FormCard = ({ data }: FormCardPropsI) => {
 
   return (
     <div className={cl.card} data-testid={TestIds.formCard}>
-      <img className={cl.cardImage} src={URL.createObjectURL(file)} alt="user-image" />
+      <img className={cl.cardImage} src={file} alt="user-image" />
       <ul className="list">
         <li className={cl.cardListItem}>Name: {name}</li>
         <li className={cl.cardListItem}>Surname: {surname}</li>

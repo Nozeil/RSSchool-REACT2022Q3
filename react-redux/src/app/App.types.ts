@@ -1,5 +1,5 @@
 import { PhotosInfoPhotoI, TagI } from 'api/api.interfaces';
-import { AppActions, SortDropdownValues } from 'enums';
+import { SortDropdownValues } from 'enums';
 import React from 'react';
 
 export interface FormCardDataI {
@@ -8,7 +8,7 @@ export interface FormCardDataI {
   date: string;
   country: string;
   gender: string;
-  file: File;
+  file: string;
 }
 
 export interface FormCardI {
@@ -48,71 +48,6 @@ export interface InitialStateI {
   shouldShowErrors: boolean;
   cardPageData: CardPageDataI;
 }
-
-interface HomeActionI {
-  type: AppActions.addHomeCards;
-  payload: {
-    homeCards: PhotosInfoPhotoI[];
-    paginatedHomeCards: PhotosInfoPhotoI[][];
-    homeCardsSort: string;
-    resultsPerPage: number;
-    page: number;
-    pages: number;
-    pagesMaxSize: number;
-    isItInitialPage: boolean;
-  };
-}
-
-interface FormAddCardActionI {
-  type: AppActions.addFormCard;
-  payload: {
-    formCard: FormCardI;
-  };
-}
-
-interface FormSaveDataActionI {
-  type: AppActions.saveFormData;
-  payload: {
-    formValues: FormFieldsI;
-  };
-}
-
-interface FormSetIsDirtyActionI {
-  type: AppActions.setIsDirty;
-  payload: {
-    isDirty: boolean;
-  };
-}
-
-interface FormSetShouldShowErrors {
-  type: AppActions.setShouldShowErrors;
-  payload: {
-    shouldShowErrors: boolean;
-  };
-}
-
-interface SetCardPageDataActionI {
-  type: AppActions.setCardPageData;
-  payload: {
-    cardPageData: CardPageDataI;
-  };
-}
-
-interface SetSearchValueActionI {
-  type: AppActions.setLastSearch;
-  payload: {
-    lastSearch: string;
-  };
-}
-
-export type AppActionType =
-  | HomeActionI
-  | FormAddCardActionI
-  | FormSaveDataActionI
-  | FormSetIsDirtyActionI
-  | FormSetShouldShowErrors
-  | SetCardPageDataActionI
-  | SetSearchValueActionI;
 
 export interface AppProviderArgsI {
   children: React.ReactElement;

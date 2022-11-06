@@ -1,7 +1,8 @@
-import useAppContext from 'app/AppContext';
 import { TestIds } from 'enums';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
+import { RootState } from 'redux/types';
 import cl from './Layout.module.css';
 
 const Layout = () => {
@@ -9,7 +10,7 @@ const Layout = () => {
     isActive ? `${cl.active} ${cl.link}` : `${cl.link}`;
   const setCardPageActive = ({ isActive }: { isActive: boolean }): string =>
     isActive ? `${cl.active} ${cl.link}` : `${cl.link} ${cl.hidden}`;
-  const { id, title } = useAppContext().appState.cardPageData;
+  const { id, title } = useSelector((state: RootState) => state.cardPageData);
   const cardPagePath = `cardPage/${id || '*'}`;
 
   return (

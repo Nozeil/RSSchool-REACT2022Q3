@@ -1,12 +1,14 @@
 import API from 'api/api';
-import useAppContext from 'app/AppContext';
-import { AppActions, TotalPagesDropdownValues } from 'enums';
+import { TotalPagesDropdownValues } from 'enums';
 import { HomeControlI } from 'pages/Home/Home.interfaces';
 import React, { ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateHomePageDataAfterTotalPagesValueChanged } from 'redux/appSlice';
+import { RootState } from 'redux/types';
 import cl from './../../pages/Home/Home.module.css';
 
 const TotalPagesDropdown = ({ homeState, setIsLoading, getPagesSize }: HomeControlI) => {
-  const { appState, dispatch } = useAppContext();
+  const dispatch = useDispatch();
   const {
     isItInitialPage,
     paginatedHomeCards,
@@ -14,23 +16,21 @@ const TotalPagesDropdown = ({ homeState, setIsLoading, getPagesSize }: HomeContr
     homeCardsSort,
     pagesMaxSize,
     lastSearch,
-  } = appState;
+  } = useSelector((state: RootState) => state);
   const startPage = 1;
 
   const onChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const pagesMaxSize = +e.target.value;
 
     if (isItInitialPage) {
-      dispatch({
-        type: AppActions.addHomeCards,
-        payload: {
-          ...appState,
+      dispatch(
+        updateHomePageDataAfterTotalPagesValueChanged({
+          homeCards: paginatedHomeCards[startPage - 1],
           page: startPage,
           pages: getPagesSize(pagesMaxSize, paginatedHomeCards.length),
           pagesMaxSize,
-          homeCards: paginatedHomeCards[startPage - 1],
-        },
-      });
+        })
+      );
     } else {
       try {
         setIsLoading(true);
@@ -40,17 +40,15 @@ const TotalPagesDropdown = ({ homeState, setIsLoading, getPagesSize }: HomeContr
           perPage: resultsPerPage,
           sort: homeCardsSort,
         });
-        dispatch({
-          type: AppActions.addHomeCards,
-          payload: {
-            ...appState,
+        dispatch(
+          updateHomePageDataAfterTotalPagesValueChanged({
             homeCards,
             resultsPerPage,
             page: startPage,
             pages: getPagesSize(pagesMaxSize, pages),
             pagesMaxSize,
-          },
-        });
+          })
+        );
         setIsLoading(false);
       } catch (e) {
         console.error(e);

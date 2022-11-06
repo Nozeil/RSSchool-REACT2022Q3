@@ -17,15 +17,21 @@ import {
   LabelTexts,
 } from './Form.enums';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AppActions, TestIds } from 'enums';
+import { TestIds } from 'enums';
 import differenceInYears from 'date-fns/differenceInYears';
-import useAppContext from 'app/AppContext';
 import { FormCardI, FormFieldsI } from 'app/App.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFormCard, saveFormData, setIsDirty, setShouldShowErrors } from 'redux/appSlice';
+import { RootState } from 'redux/types';
 
 const Form = () => {
   const [message, setMessageVisibility] = useState<boolean>(false);
-  const { appState, dispatch } = useAppContext();
-  const { formValues, isDirty, shouldShowErrors } = appState;
+  const dispatch = useDispatch();
+  const { formValues, isDirty, shouldShowErrors } = useSelector((state: RootState) => ({
+    formValues: state.formValues,
+    isDirty: state.isDirty,
+    shouldShowErrors: state.shouldShowErrors,
+  }));
   const { register, handleSubmit, formState, getValues, setValue, getFieldState, reset, trigger } =
     useForm<FormValuesI>({
       mode: shouldShowErrors ? 'onChange' : 'onSubmit',
@@ -45,7 +51,7 @@ const Form = () => {
     if (isSubmitSuccessful) {
       reset();
     }
-  }, [isSubmitSuccessful, reset, dispatch]);
+  }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FormValuesI> = (data) => {
     const { name, surname, date, country, gender, image: fileList } = data;
@@ -59,15 +65,15 @@ const Form = () => {
             date,
             country,
             gender: gender ? Genders.female : Genders.male,
-            file,
+            file: URL.createObjectURL(file),
           },
           id: Date.now(),
         };
         setMessageVisibility(true);
 
-        dispatch({ type: AppActions.addFormCard, payload: { formCard } });
-        dispatch({ type: AppActions.setIsDirty, payload: { isDirty: false } });
-        dispatch({ type: AppActions.setShouldShowErrors, payload: { shouldShowErrors: false } });
+        dispatch(addFormCard({ formCard }));
+        dispatch(setIsDirty({ isDirty: false }));
+        dispatch(setShouldShowErrors({ shouldShowErrors: false }));
       }
     }
   };
@@ -113,10 +119,7 @@ const Form = () => {
         trigger();
       }
       return () => {
-        dispatch({
-          type: AppActions.saveFormData,
-          payload: { formValues: getFields() },
-        });
+        dispatch(saveFormData({ formValues: getFields() }));
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -209,7 +212,7 @@ const Form = () => {
         <FormSuccessMessage isSuccessMessage={message} cl={cl} onTransitionEnd={onTransitionEnd} />
       </form>
 
-      <FormCardList cards={appState.formCards} />
+      <FormCardList />
     </>
   );
 };

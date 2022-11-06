@@ -1,12 +1,13 @@
-import useAppContext from 'app/AppContext';
-import { AppActions, TestIds } from 'enums';
+import { TestIds } from 'enums';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setCardPageData } from 'redux/appSlice';
 import { CardPropsI } from './Card.interfaces';
 import cl from './Card.module.css';
 
 const Card = ({ cardData }: CardPropsI) => {
-  const { dispatch } = useAppContext();
+  const dispatch = useDispatch();
   const { title, secret, server, id, owner, description, tags } = cardData;
   const newTitle = title._content ? title._content : 'Photo';
   const src = `https://live.staticflickr.com/${server}/${id}_${secret}_b.jpg`;
@@ -21,7 +22,7 @@ const Card = ({ cardData }: CardPropsI) => {
       subtitle: owner.username,
     };
 
-    dispatch({ type: AppActions.setCardPageData, payload: { cardPageData: cardPageData } });
+    dispatch(setCardPageData({ cardPageData: cardPageData }));
   };
 
   return (

@@ -3,12 +3,12 @@ import React from 'react';
 import { defualtCardPageValues } from './CardPage.enums';
 import cl from './CardPage.module.css';
 import dompurify from 'dompurify';
-import useAppContext from 'app/AppContext';
 import { Link } from 'react-router-dom';
+import { RootState } from 'redux/types';
+import { useSelector } from 'react-redux';
 
 const CardPage = () => {
-  const { appState } = useAppContext();
-  const { cardPageData } = appState;
+  const cardPageData = useSelector((state: RootState) => state.cardPageData);
   const { title, subtitle, description, tags, src } = cardPageData;
 
   const newDescription = description ? description : defualtCardPageValues.description;
