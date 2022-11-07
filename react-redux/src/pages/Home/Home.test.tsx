@@ -1,4 +1,4 @@
-import { render, waitFor, screen } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 import Home from 'pages/Home/Home';
 import React from 'react';
 import { ApiMethods } from 'api/api.enums';
@@ -6,8 +6,7 @@ import { mockData } from '__mocks__/flickrMockData';
 import userEvent from '@testing-library/user-event';
 import { TestIds } from 'enums';
 import initAxiosGetMethodMock from '__mocks__/initAxiosGetMethodMock';
-import renderWithRouter from 'renderWithRouter';
-import { AppProvider } from 'app/AppContext';
+import { renderWithProviderAndRouter } from 'utils/test-utils';
 
 const { interestingness, photosInfo, searchedPhotos } = mockData;
 
@@ -24,12 +23,12 @@ const checkCreatedCards = (cards: HTMLElement[]) => {
 
 describe('Home initital view', () => {
   it('should call axios get 2 times', async () => {
-    render(<Home />);
+    renderWithProviderAndRouter(<Home />);
     await waitFor(() => expect(retrieveMockGet()).toBeCalledTimes(2));
   });
 
   it('should call to flickr.interestingness.getList and then to flickr.photos.getInfo with the correct args', async () => {
-    render(<Home />);
+    renderWithProviderAndRouter(<Home />);
     await waitFor(() => {
       expect(retrieveMockGet()).nthCalledWith(1, '', {
         params: { method: ApiMethods.flickrInterestingnessGetList, per_page: 500 },
@@ -43,11 +42,7 @@ describe('Home initital view', () => {
     });
   });
   it('should show 1 card with mock data', async () => {
-    renderWithRouter(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
+    renderWithProviderAndRouter(<Home />);
     checkCreatedCards(await screen.findAllByTestId(TestIds.card));
   });
 });
@@ -63,18 +58,14 @@ const searchPhoto = async () => {
 
 describe('Home view after user search', () => {
   it('should call axios get 4 times', async () => {
-    renderWithRouter(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
+    renderWithProviderAndRouter(<Home />);
     await searchPhoto();
     await waitFor(() => {
       expect(retrieveMockGet()).toBeCalledTimes(4);
     });
   });
   it('should call to flickr.photos.search and then to flickr.photos.getInfo with the correct args', async () => {
-    render(<Home />);
+    renderWithProviderAndRouter(<Home />);
     await searchPhoto();
     await waitFor(() => {
       expect(retrieveMockGet()).toHaveBeenNthCalledWith(3, '', {
@@ -95,11 +86,7 @@ describe('Home view after user search', () => {
     });
   });
   it('should search and show searched data after pressing enter button', async () => {
-    renderWithRouter(
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    );
+    renderWithProviderAndRouter(<Home />);
     await searchPhoto();
     await waitFor(() => checkCreatedCards(screen.getAllByTestId(TestIds.card)));
   });

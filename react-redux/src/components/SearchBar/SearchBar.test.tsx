@@ -1,20 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import SearchBar from './SearchBar';
 import { mockStorage } from '__mocks__/localStorageMock';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviderAndRouter } from 'utils/test-utils';
 
-const [homeState, setSearchValue, setIsLoading, getPagesSize] = [
-  {
-    searchValue: 'search',
-    data: [],
-    isLoading: false,
-    lastSearch: 'lastSearch',
-  },
-  jest.fn(),
-  jest.fn(),
-  jest.fn(),
-];
+const [searchValue, setSearchValue] = ['search', jest.fn()];
 
 describe('Local storage', () => {
   mockStorage();
@@ -23,13 +14,8 @@ describe('Local storage', () => {
   const [key, value] = ['search', 'test-value'];
 
   it('should render search bar', () => {
-    render(
-      <SearchBar
-        homeState={homeState}
-        setIsLoading={setIsLoading}
-        setSearchValue={setSearchValue}
-        getPagesSize={getPagesSize}
-      />
+    renderWithProviderAndRouter(
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
     );
     const [button, input] = [screen.getByRole('button'), screen.getByPlaceholderText('Search...')];
 
@@ -40,13 +26,8 @@ describe('Local storage', () => {
 
   it('should call getItem method', () => {
     const getItemSpy = jest.spyOn(localStorage, 'getItem');
-    render(
-      <SearchBar
-        homeState={homeState}
-        setIsLoading={setIsLoading}
-        setSearchValue={setSearchValue}
-        getPagesSize={getPagesSize}
-      />
+    renderWithProviderAndRouter(
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
     );
     expect(getItemSpy).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem(key)).toBe(null);
@@ -57,13 +38,8 @@ describe('Local storage', () => {
 
   it('should call removeItem method', () => {
     const removeItemSpy = jest.spyOn(localStorage, 'removeItem');
-    const { getByRole } = render(
-      <SearchBar
-        homeState={homeState}
-        setIsLoading={setIsLoading}
-        setSearchValue={setSearchValue}
-        getPagesSize={getPagesSize}
-      />
+    const { getByRole } = renderWithProviderAndRouter(
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
     );
     const search = getByRole('searchbox');
     userEvent.clear(search);
@@ -72,13 +48,8 @@ describe('Local storage', () => {
 
   it('should call setItem method', () => {
     const setItemSpy = jest.spyOn(localStorage, 'setItem');
-    const { unmount } = render(
-      <SearchBar
-        homeState={homeState}
-        setIsLoading={setIsLoading}
-        setSearchValue={setSearchValue}
-        getPagesSize={getPagesSize}
-      />
+    const { unmount } = renderWithProviderAndRouter(
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
     );
     unmount();
     expect(setItemSpy).toBeCalledTimes(1);
