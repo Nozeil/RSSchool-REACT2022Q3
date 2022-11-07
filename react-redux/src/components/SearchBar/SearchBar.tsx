@@ -1,17 +1,14 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
-import API from './../../api/api';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/types';
-import { setLastSearch, updateHomePageDataAfterSearch } from 'redux/appSlice';
+import updateStateAfterSearch from 'redux/thunks/updateStateAfterSearch';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
-const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: SearchBarPropsI) => {
-  const startPage = 1;
+const SearchBar = ({ searchValue, setSearchValue }: SearchBarPropsI) => {
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
-  const { homeCardsSort, resultsPerPage, pagesMaxSize } = useSelector((state: RootState) => state);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.isLoading);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -21,32 +18,7 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: Se
   };
 
   const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
-    const tags = e.currentTarget.value;
-
-    if (e.code === 'Enter' && tags) {
-      try {
-        e.currentTarget.blur();
-        dispatch(setLastSearch({ lastSearch: tags }));
-        setIsLoading(true);
-        const { data: homeCards, pages } = await API.getData({
-          tags,
-          sort: homeCardsSort,
-          page: startPage,
-          perPage: resultsPerPage,
-        });
-        dispatch(
-          updateHomePageDataAfterSearch({
-            homeCards,
-            page: startPage,
-            pages: getPagesSize(pagesMaxSize, pages),
-            isItInitialPage: false,
-          })
-        );
-        setIsLoading(false);
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    dispatch(updateStateAfterSearch(e));
   };
 
   useEffect(() => {
@@ -67,7 +39,7 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: Se
     };
   }, []);
 
-  const searchBarClass = homeState.isLoading ? cl.searchBarDisabled : cl.searchBar;
+  const searchBarClass = isLoading ? cl.searchBarDisabled : cl.searchBar;
 
   return (
     <div className={searchBarClass}>
@@ -76,7 +48,7 @@ const SearchBar = ({ homeState, setSearchValue, setIsLoading, getPagesSize }: Se
         className={cl.searchInput}
         type="search"
         placeholder="Search..."
-        value={homeState.searchValue}
+        value={searchValue}
         onChange={onChange}
         onKeyDown={onKeyDown}
       />

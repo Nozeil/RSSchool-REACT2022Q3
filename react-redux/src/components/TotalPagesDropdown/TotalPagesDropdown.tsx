@@ -1,62 +1,17 @@
-import API from 'api/api';
 import { TotalPagesDropdownValues } from 'enums';
-import { HomeControlI } from 'pages/Home/Home.interfaces';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import React, { ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateHomePageDataAfterTotalPagesValueChanged } from 'redux/appSlice';
-import { RootState } from 'redux/types';
+import updateStateAfterTotalPagesChanged from 'redux/thunks/updateStateAfterTotalPagesChanged';
 import cl from './../../pages/Home/Home.module.css';
 
-const TotalPagesDropdown = ({ homeState, setIsLoading, getPagesSize }: HomeControlI) => {
-  const dispatch = useDispatch();
-  const {
-    isItInitialPage,
-    paginatedHomeCards,
-    resultsPerPage,
-    homeCardsSort,
-    pagesMaxSize,
-    lastSearch,
-  } = useSelector((state: RootState) => state);
-  const startPage = 1;
+const TotalPagesDropdown = () => {
+  const dispatch = useAppDispatch();
+  const { pagesMaxSize, isLoading } = useAppSelector((state) => state);
 
-  const onChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    const pagesMaxSize = +e.target.value;
+  const onChange = async (e: ChangeEvent<HTMLSelectElement>) =>
+    dispatch(updateStateAfterTotalPagesChanged(e));
 
-    if (isItInitialPage) {
-      dispatch(
-        updateHomePageDataAfterTotalPagesValueChanged({
-          homeCards: paginatedHomeCards[startPage - 1],
-          page: startPage,
-          pages: getPagesSize(pagesMaxSize, paginatedHomeCards.length),
-          pagesMaxSize,
-        })
-      );
-    } else {
-      try {
-        setIsLoading(true);
-        const { data: homeCards, pages } = await API.getData({
-          tags: lastSearch,
-          page: startPage,
-          perPage: resultsPerPage,
-          sort: homeCardsSort,
-        });
-        dispatch(
-          updateHomePageDataAfterTotalPagesValueChanged({
-            homeCards,
-            resultsPerPage,
-            page: startPage,
-            pages: getPagesSize(pagesMaxSize, pages),
-            pagesMaxSize,
-          })
-        );
-        setIsLoading(false);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  };
-
-  const TotalPagesClass = homeState.isLoading ? `${cl.disabled} ${cl.field}` : cl.field;
+  const TotalPagesClass = isLoading ? `${cl.disabled} ${cl.field}` : cl.field;
 
   return (
     <select className={TotalPagesClass} defaultValue={pagesMaxSize} onChange={onChange}>

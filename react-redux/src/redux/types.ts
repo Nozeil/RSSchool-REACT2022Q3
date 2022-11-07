@@ -6,6 +6,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export interface InitialStateI {
+  isLoading: boolean;
   formCards: FormCardsData;
   formValues: FormFieldsI;
   homeCards: PhotosInfoPhotoI[];
