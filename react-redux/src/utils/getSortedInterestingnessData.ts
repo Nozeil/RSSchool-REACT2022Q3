@@ -2,24 +2,18 @@ import { PhotosInfoPhotoI } from 'api/api.interfaces';
 import { SortDropdownValues } from 'enums';
 
 const getSortedInterestingnessData = (homeCards: PhotosInfoPhotoI[], sortValue: string) => {
-  let cards: PhotosInfoPhotoI[] = [];
+  const cards: PhotosInfoPhotoI[] = [...homeCards];
 
   switch (sortValue) {
     case SortDropdownValues.viewsAsc:
-      cards = homeCards.sort((prev, curr) => +prev.views - +curr.views);
-      break;
+      return cards.sort((prev, curr) => +prev.views - +curr.views);
     case SortDropdownValues.dateDesc:
-      cards = homeCards.sort((prev, curr) => +curr.dateuploaded - +prev.dateuploaded);
-      break;
+      return cards.sort((prev, curr) => +curr.dateuploaded - +prev.dateuploaded);
     case SortDropdownValues.dateAsc:
-      cards = homeCards.sort((prev, curr) => +prev.dateuploaded - +curr.dateuploaded);
-      break;
+      return cards.sort((prev, curr) => +prev.dateuploaded - +curr.dateuploaded);
     default:
-      cards = homeCards.sort((prev, curr) => +curr.views - +prev.views);
-      break;
+      return cards.sort((prev, curr) => +curr.views - +prev.views);
   }
-
-  return cards;
 };
 
 export default getSortedInterestingnessData;

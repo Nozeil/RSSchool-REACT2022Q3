@@ -3,6 +3,8 @@ import { FormFieldsI } from 'app/App.types';
 import { Countries } from 'components/Form/Form.enums';
 import { SortDropdownValues, ResultsPerPageDropdownValues, TotalPagesDropdownValues } from 'enums';
 import reducers from './reducers';
+import getInterestingness from './thunks/getInterestingness';
+import getPhotos from './thunks/getPhotos';
 import { InitialStateI } from './types';
 
 const defaultFormValues: FormFieldsI = {
@@ -43,6 +45,29 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers,
+  extraReducers: (builder) => {
+    builder
+      .addCase(getInterestingness.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getInterestingness.fulfilled || getPhotos.fulfilled, (state, action) => {
+        const { payload } = action;
+        if (payload) {
+          state.homeCards = payload;
+          state.isLoading = false;
+        }
+      })
+      .addCase(getPhotos.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getPhotos.fulfilled, (state, action) => {
+        const { payload } = action;
+        if (payload) {
+          state.homeCards = payload.data;
+          state.isLoading = false;
+        }
+      });
+  },
 });
 
 export const {

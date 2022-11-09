@@ -1,14 +1,18 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { SearchBarPropsI } from './SearchBar.interfaces';
 import cl from './SearchBar.module.css';
-import updateStateAfterSearch from 'redux/thunks/updateStateAfterSearch';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import getPhotos from 'redux/thunks/getPhotos';
+import { setLastSearch, updateHomePageDataAfterSearch } from 'redux/appSlice';
+import getPagesSize from 'utils/getPagesSize';
 
 const SearchBar = ({ searchValue, setSearchValue }: SearchBarPropsI) => {
   const storageKey = 'search';
   const searchBar = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.isLoading);
+  const { isLoading, homeCardsSort, resultsPerPage, pagesMaxSize } = useAppSelector(
+    (state) => state
+  );
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -18,7 +22,31 @@ const SearchBar = ({ searchValue, setSearchValue }: SearchBarPropsI) => {
   };
 
   const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
-    dispatch(updateStateAfterSearch(e));
+    const tags = e.currentTarget.value;
+    const startPage = 1;
+    if (e.code === 'Enter' && tags) {
+      e.currentTarget.blur();
+      const response = await dispatch(
+        getPhotos({
+          tags,
+          sort: homeCardsSort,
+          page: startPage,
+          perPage: resultsPerPage,
+        })
+      ).unwrap();
+      if (response) {
+        dispatch(setLastSearch({ lastSearch: tags }));
+        const { data: homeCards, pages } = response;
+        dispatch(
+          updateHomePageDataAfterSearch({
+            homeCards,
+            page: startPage,
+            pages: getPagesSize(pagesMaxSize, pages),
+            isItInitialPage: false,
+          })
+        );
+      }
+    }
   };
 
   useEffect(() => {
