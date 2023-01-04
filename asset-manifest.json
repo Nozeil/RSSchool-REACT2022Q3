@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/RSSchool-REACT2022Q3/static/css/main.370a8b25.css",
+    "main.js": "/RSSchool-REACT2022Q3/static/js/main.3c63cfeb.js",
+    "index.html": "/RSSchool-REACT2022Q3/index.html",
+    "static/media/cancel.svg": "/RSSchool-REACT2022Q3/static/media/cancel.bffb84ce2deb8280c4cf.svg",
+    "static/media/search.svg": "/RSSchool-REACT2022Q3/static/media/search.56982c1a4d1ef20556e0.svg",
+    "main.370a8b25.css.map": "/RSSchool-REACT2022Q3/static/css/main.370a8b25.css.map",
+    "main.3c63cfeb.js.map": "/RSSchool-REACT2022Q3/static/js/main.3c63cfeb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.370a8b25.css",
+    "static/js/main.3c63cfeb.js"
+  ]
+}
